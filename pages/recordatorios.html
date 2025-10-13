@@ -1,8 +1,8 @@
-<!-- Contenido: Recordatorios -->
+<!-- recordatorios.html -->
 <section class="flex-grow container mx-auto px-4 py-8">
   <div class="max-w-4xl mx-auto">
     
-    <!-- Encabezado de la Página -->
+    <!-- Encabezado -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
       <h2 class="text-3xl font-bold text-gray-800 dark:text-gray-200">Recordatorios</h2>
       <button id="btn-show-form" class="mt-4 sm:mt-0 flex items-center gap-2 bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
@@ -12,16 +12,12 @@
     </div>
 
     <!-- Contenedor de Recordatorios -->
-    <div id="recordatorios-container" class="space-y-8">
-        <!-- Las secciones se cargarán aquí dinámicamente -->
-    </div>
+    <div id="recordatorios-container" class="space-y-8"></div>
 
-    <!-- Formulario para nuevo recordatorio (inicialmente oculto) -->
+    <!-- Formulario para nuevo recordatorio -->
     <section id="form-section" class="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg mt-8 hidden">
       <h3 class="text-lg font-bold mb-4 text-gray-800 dark:text-gray-200">Agregar nuevo recordatorio</h3>
       <form id="form-nuevo-recordatorio" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        
-        <!-- Columna Izquierda del Formulario -->
         <div class="space-y-4">
           <div>
             <label for="titulo" class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Título del Recordatorio</label>
@@ -41,8 +37,7 @@
             <input id="time" type="time" value="09:00" class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-blue-500 focus:border-blue-500">
           </div>
         </div>
-        
-        <!-- Columna Derecha del Formulario -->
+
         <div>
           <p class="text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Canal de notificación</p>
           <div class="space-y-2">
@@ -60,120 +55,5 @@
   </div>
 </section>
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const container = document.getElementById('recordatorios-container');
-    const formSection = document.getElementById('form-section');
-    const showFormBtn = document.getElementById('btn-show-form');
-    const cancelFormBtn = document.getElementById('btn-cancel-form');
-    const form = document.getElementById('form-nuevo-recordatorio');
-
-    let recordatorios = [];
-
-    const getIconForType = (type) => {
-        switch (type.toLowerCase()) {
-            case 'cita': return 'calendar_month';
-            case 'vacuna': return 'vaccines';
-            case 'control': return 'checklist';
-            default: return 'pill';
-        }
-    };
-
-    const renderRecordatorios = () => {
-        if (!container) return;
-        container.innerHTML = '';
-
-        const grouped = recordatorios.reduce((acc, rec) => {
-            const key = rec.tipo;
-            if (!acc[key]) {
-                acc[key] = [];
-            }
-            acc[key].push(rec);
-            return acc;
-        }, {});
-
-        for (const tipo in grouped) {
-            const section = document.createElement('section');
-            section.className = 'mb-8';
-            
-            const title = document.createElement('h3');
-            title.className = 'text-xl font-bold mb-4 text-gray-800 dark:text-gray-200';
-            title.textContent = tipo.charAt(0).toUpperCase() + tipo.slice(1) + 's';
-            section.appendChild(title);
-
-            grouped[tipo].forEach(rec => {
-                const card = document.createElement('div');
-                card.className = 'bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 flex justify-between items-center';
-                
-                let actionsHtml = '';
-                if (rec.tipo.toLowerCase() === 'cita') {
-                    actionsHtml = `
-                        <div class="flex gap-2">
-                            <button class="px-3 py-1 text-sm rounded-lg bg-red-100 text-red-700 dark:bg-red-900/50 dark:text-red-300 hover:bg-red-200">No</button>
-                            <button class="px-3 py-1 text-sm rounded-lg bg-green-100 text-green-700 dark:bg-green-900/50 dark:text-green-300 hover:bg-green-200">Sí, confirmo</button>
-                        </div>`;
-                } else {
-                    actionsHtml = `<button class="px-3 py-1 text-sm rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">Editar</button>`;
-                }
-
-                card.innerHTML = `
-                    <div class="flex items-center gap-4">
-                        <span class="material-symbols-outlined text-blue-500 text-3xl">${getIconForType(rec.tipo)}</span>
-                        <div>
-                            <p class="font-semibold text-gray-800 dark:text-gray-200">${rec.titulo}</p>
-                            <p class="text-sm text-blue-600 dark:text-blue-400">${new Date(rec.fecha).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
-                        </div>
-                    </div>
-                    ${actionsHtml}
-                `;
-                section.appendChild(card);
-            });
-            container.appendChild(section);
-        }
-    };
-
-    const initRecordatorios = async () => {
-        try {
-            const response = await fetch('assets/data/recordatorios.json');
-            if (!response.ok) throw new Error('No se pudieron cargar los recordatorios.');
-            recordatorios = await response.json();
-            renderRecordatorios();
-        } catch (error) {
-            console.error(error);
-            if (container) {
-                container.innerHTML = '<p class="text-center text-red-500">Error al cargar los recordatorios.</p>';
-            }
-        }
-    };
-
-    // --- Event Listeners ---
-    showFormBtn.addEventListener('click', () => {
-        formSection.classList.remove('hidden');
-        showFormBtn.classList.add('hidden');
-    });
-
-    cancelFormBtn.addEventListener('click', () => {
-        formSection.classList.add('hidden');
-        showFormBtn.classList.remove('hidden');
-        form.reset();
-    });
-
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const nuevoRecordatorio = {
-            id: Date.now(),
-            tipo: 'Personalizado',
-            titulo: form.titulo.value,
-            descripcion: 'Recordatorio personal',
-            fecha: new Date().toISOString().split('T')[0], // Usar fecha actual como ejemplo
-            estado: 'pendiente'
-        };
-        recordatorios.push(nuevoRecordatorio);
-        renderRecordatorios();
-        cancelFormBtn.click(); // Ocultar y resetear el formulario
-        alert('Recordatorio agregado con éxito.');
-    });
-
-    initRecordatorios();
-});
-</script>
+<!-- Enlace al script separado -->
+<script src="assets/js/recordatorios.js"></script>

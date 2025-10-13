@@ -13,6 +13,7 @@ const urlsToCache = [
   './assets/js/centros.js',
   './assets/js/directorio.js',
   './assets/js/medicos.js',
+  './assets/js/recordatorios.js',
   './assets/js/theme.js',
   './assets/img/clicksaludLogo.png',
   'https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap',
