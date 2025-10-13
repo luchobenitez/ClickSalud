@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
             break;                
 
             case 'recordatorios':
-                import(`${basePath}assets/js/recordatorios.js`)
+                import(`${basePath}assets/js/recordatorio.js`)
                     .catch(err => console.error('Error al inicializar recordatorios:', err));
             break;                            
         
