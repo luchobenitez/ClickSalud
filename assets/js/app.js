@@ -47,10 +47,32 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    /**
+     * Router basado en el hash (#ruta)
+    */
     const router = async () => {
         const hash = window.location.hash.substring(1) || 'dashboard';
         await loadPage(hash);
-        if (hash === 'directorio') initDirectorioPage();
+        
+        switch (hash) {
+            case 'directorio':
+            initDirectorioPage();
+            break;
+        
+            case 'citas':
+            import('./assets/js/medicos.js')
+                .then(module => module.initCitas())
+                .catch(err => console.error('Error al inicializar citas:', err));
+            break;
+        
+            case 'soporte':
+            // lógica futura
+            break;
+        
+            case 'historia-clinica':
+            // lógica futura
+            break;
+        }
     };
 
     const initApp = async () => {
