@@ -71,6 +71,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     .catch(err => console.error('Error al inicializar Directorio:', err));
             break;                
 
+            case 'recordatorios':
+                import(`${basePath}assets/js/recordatorios.js`)
+                    .then(module => {
+                        if (typeof module.renderRecordatorios === 'function') {
+                            module.renderRecordatorios();
+                        } else {
+                            console.warn('⚠️ renderRecordatorios() no encontrada en recordatorios.js');
+                        }
+                    })
+                    .catch(err => console.error('Error al inicializar recordatorios:', err));
+            break;                            
         
             case 'citas':
                 import(`${basePath}assets/js/medicos.js`)
