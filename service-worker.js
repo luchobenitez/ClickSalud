@@ -10,6 +10,8 @@ const urlsToCache = [
   './manifest.json',
   './assets/css/styles.css',
   './assets/js/app.js',
+  './assets/js/centros.js',
+  './assets/js/directorio.js',
   './assets/js/medicos.js',
   './assets/js/theme.js',
   './assets/img/clicksaludLogo.png',

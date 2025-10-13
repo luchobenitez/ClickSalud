@@ -60,8 +60,17 @@ document.addEventListener('DOMContentLoaded', () => {
             : './';
         switch (hash) {
             case 'directorio':
-                initDirectorioPage();
-            break;
+                import(`${basePath}assets/js/directorio.js`)
+                    .then(module => {
+                        if (typeof module.initDirectorio === 'function') {
+                        module.initDirectorio();
+                        } else {
+                        console.warn('⚠️ initDirectorio() no encontrada en directorio.js');
+                        }
+                    })
+                    .catch(err => console.error('Error al inicializar Directorio:', err));
+            break;                
+
         
             case 'citas':
                 import(`${basePath}assets/js/medicos.js`)
@@ -124,60 +133,6 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('theme', theme);
             icon.textContent = isDark ? 'dark_mode' : 'light_mode';
         });
-    };
-
-    // Detectar contexto de ejecución (local o GitHub Pages)
-    const basePath = location.hostname.includes('github.io')
-        ? '/ClickSalud/'
-        : './';
-    let medicosCache = null;
-    const initDirectorioPage = async () => {
-        const lista = document.getElementById('directorio-lista');
-        const espSel = document.getElementById('filtro-especialidad');
-        const ciuSel = document.getElementById('filtro-ciudad');
-        if (!lista) return;
-
-        try {
-            if (!medicosCache) {
-                const res = await fetch(`${basePath}assets/js/medicos.js`);
-                medicosCache = await res.json();
-            }
-            const medicos = medicosCache;
-            const especialidades = [...new Set(medicos.map(m => m.especialidad))];
-            const ciudades = [...new Set(medicos.map(m => m.ciudad))];
-            especialidades.forEach(e => espSel.add(new Option(e, e)));
-            ciudades.forEach(c => ciuSel.add(new Option(c, c)));
-
-            const render = (listaM) => {
-                lista.innerHTML = listaM.length
-                    ? listaM.map(m => `
-                        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow flex items-center space-x-4">
-                            <img src="${m.foto}" alt="${m.nombre}" class="h-16 w-16 rounded-full">
-                            <div>
-                                <h3 class="font-bold">${m.nombre}</h3>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">${m.especialidad}</p>
-                                <p class="text-sm text-gray-500 dark:text-gray-300">${m.ciudad}</p>
-                            </div>
-                        </div>
-                    `).join('')
-                    : '<p class="text-gray-500 text-center">No se encontraron médicos.</p>';
-            };
-
-            const filtrar = () => {
-                const esp = espSel.value;
-                const ciu = ciuSel.value;
-                render(medicos.filter(m =>
-                    (!esp || m.especialidad === esp) && (!ciu || m.ciudad === ciu)
-                ));
-            };
-
-            espSel.addEventListener('change', filtrar);
-            ciuSel.addEventListener('change', filtrar);
-            render(medicos);
-        } catch (error) {
-            console.error('Error al cargar directorio médico:', error);
-            lista.innerHTML = '<p class="text-red-500">Error al cargar el directorio.</p>';
-        }
     };
 
     const registerServiceWorker = () => {
