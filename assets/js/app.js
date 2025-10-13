@@ -58,6 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const basePath = location.hostname.includes('github.io')
             ? '/ClickSalud/'
             : './';
+        if (hash === 'historia') hash = 'historia-clinica';
         switch (hash) {
             case 'directorio':
                 import(`${basePath}assets/js/directorio.js`)

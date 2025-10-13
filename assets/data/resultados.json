@@ -1,23 +1,110 @@
 [
   {
     "id": 1,
-    "tipo": "Análisis de Sangre",
+    "tipo": "Análisis de Sangre (Hemograma y Bioquímica Básica)",
     "fecha": "2025-04-20",
     "estado": "disponible",
-    "url_pdf": "#"
+    "url_pdf": "https://lab.hospital.py/pdf/1",
+    "resultados": {
+      "unidad_medida_general": "convencional",
+      "laboratorio": "Laboratorio Central - Hospital X",
+      "valores": [
+        {
+          "parametro": "Glóbulos Blancos",
+          "valor": 7.5,
+          "unidades": "x10³/mm³",
+          "referencia": "4.5 - 10.0"
+        },
+        {
+          "parametro": "Hemoglobina",
+          "valor": 13.8,
+          "unidades": "g/dL",
+          "referencia": "12.0 - 15.5"
+        },
+        {
+          "parametro": "Glucosa",
+          "valor": 105,
+          "unidades": "mg/dL",
+          "referencia": "70 - 100",
+          "notas": "Levemente elevada."
+        },
+        {
+          "parametro": "Creatinina",
+          "valor": 0.85,
+          "unidades": "mg/dL",
+          "referencia": "0.5 - 1.2"
+        }
+      ]
+    }
   },
   {
     "id": 2,
-    "tipo": "Radiografía de Tórax",
+    "tipo": "Radiografía de Tórax (Posteroanterior y Lateral)",
     "fecha": "2025-03-15",
     "estado": "disponible",
-    "url_pdf": "#"
+    "url_pdf": "https://imagen.hospital.py/pdf/2",
+    "resultados": {
+      "tecnica": "Radiografía de tórax, proyecciones PA y Lateral.",
+      "informe_radiologico": {
+        "campos_pulmonares": "Patrón pulmonar sin infiltrados activos ni consolidaciones.",
+        "silueta_cardiaca": "Índice cardiotorácico conservado (menor al 50%).",
+        "impresion_diagnostica": "Radiografía de tórax sin patología aguda. Hallazgos crónicos compatibles con bronquitis leve."
+      }
+    }
   },
   {
     "id": 3,
     "tipo": "Perfil Lipídico",
     "fecha": "2025-05-05",
+    "estado": "disponible",
+    "url_pdf": "https://lab.hospital.py/pdf/3",
+    "resultados": {
+      "unidad_medida_general": "convencional",
+      "laboratorio": "Laboratorio Central - Hospital X",
+      "valores": [
+        {
+          "parametro": "Colesterol Total",
+          "valor": 225,
+          "unidades": "mg/dL",
+          "referencia": "< 200",
+          "notas": "Elevado."
+        },
+        {
+          "parametro": "Colesterol HDL",
+          "valor": 45,
+          "unidades": "mg/dL",
+          "referencia": "> 60"
+        },
+        {
+          "parametro": "Triglicéridos",
+          "valor": 170,
+          "unidades": "mg/dL",
+          "referencia": "< 150",
+          "notas": "Límite alto."
+        },
+        {
+          "parametro": "Colesterol LDL",
+          "valor": 140,
+          "unidades": "mg/dL",
+          "referencia": "< 130"
+        }
+      ]
+    }
+  },
+  {
+    "id": 4,
+    "tipo": "Ecografía Abdominal Total",
+    "fecha": "2025-10-13",
     "estado": "pendiente",
-    "url_pdf": null
+    "url_pdf": null,
+    "resultados": null
+  },
+  {
+    "id": 5,
+    "tipo": "Hemocultivo",
+    "fecha": "2025-10-13",
+    "estado": "pendiente",
+    "url_pdf": null,
+    "resultados": null
   }
 ]
