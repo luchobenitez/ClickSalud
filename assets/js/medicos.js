@@ -1,34 +1,28 @@
 // assets/js/medicos.js
-
 /**
  * ==============================================================
  * Click-Salud | Módulo de gestión de médicos y citas
  * --------------------------------------------------------------
- * Contiene:
- *  - obtenerMedicos(): carga el JSON con la lista de médicos
- *  - filtrarMedicos(): filtra según criterios
- *  - renderMedicos(): muestra resultados en tarjetas
- *  - initCitas(): inicializa la lógica completa de la página de citas
+ * Carga, filtrado y renderizado de médicos con manejo de errores.
+ * Incluye inicialización robusta para SPA (páginas cargadas dinámicamente)
  * ==============================================================
  */
 
-/**
- * Cargar datos de médicos desde el JSON (ruta relativa)
- */
 export async function obtenerMedicos() {
   try {
     const response = await fetch('assets/data/medicos.json');
-    if (!response.ok) throw new Error('No se pudo cargar medicos.json');
-    return await response.json();
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const data = await response.json();
+
+    console.log(`✅ ${data.length} médicos cargados desde medicos.json`);
+    return data;
   } catch (error) {
+    mostrarMensajeError(`❌ Error al obtener médicos: ${error.message}`);
     console.error('❌ Error al obtener médicos:', error);
     return [];
   }
 }
 
-/**
- * Filtrar lista de médicos según filtros activos
- */
 export function filtrarMedicos(medicos, filtros = {}) {
   return medicos.filter(m =>
     (!filtros.especialidad || m.especialidad === filtros.especialidad) &&
@@ -38,15 +32,17 @@ export function filtrarMedicos(medicos, filtros = {}) {
   );
 }
 
-/**
- * Renderizar tarjetas de médicos en el contenedor especificado
- */
 export function renderMedicos(lista, contenedorId) {
   const contenedor = document.getElementById(contenedorId);
+  if (!contenedor) {
+    mostrarMensajeError(`❌ Contenedor con id="${contenedorId}" no encontrado.`);
+    return;
+  }
+
   contenedor.innerHTML = '';
 
   if (!lista || lista.length === 0) {
-    contenedor.innerHTML = `<p class="text-gray-600 dark:text-gray-400">No se encontraron resultados.</p>`;
+    contenedor.innerHTML = `<p class="text-gray-600 dark:text-gray-400">⚠️ No se encontraron resultados.</p>`;
     return;
   }
 
@@ -70,52 +66,63 @@ export function renderMedicos(lista, contenedorId) {
 }
 
 /**
- * Inicializar la lógica de la página de citas
+ * Inicializa la lógica de la página de citas con manejo robusto de errores
  */
 export async function initCitas() {
+  console.log('🩺 Inicializando módulo de citas...');
+
+  // Intentar esperar que el DOM tenga los elementos requeridos
+  await esperarElemento('#form-citas', 2000);
+
   const form = document.getElementById('form-citas');
   const selEspecialidad = document.getElementById('select-especialidad');
   const selCiudad = document.getElementById('select-ciudad');
   const selProfesional = document.getElementById('select-profesional');
   const selCentro = document.getElementById('select-centro');
-  const contenedor = document.getElementById('resultados-citas');
 
-  if (!form || !selEspecialidad || !selCiudad) {
-    console.warn('⚠️ Elementos del formulario no encontrados en la página citas.');
+  if (!form || !selEspecialidad || !selCiudad || !selProfesional || !selCentro) {
+    mostrarMensajeError('⚠️ No se encontraron elementos del formulario en el DOM.');
+    console.warn('⚠️ initCitas: elementos del formulario no disponibles aún.');
     return;
   }
 
   const medicos = await obtenerMedicos();
+  if (medicos.length === 0) {
+    mostrarMensajeError('⚠️ No se cargaron datos de médicos.');
+    return;
+  }
 
   // Cargar opciones iniciales
   llenarSelect(selEspecialidad, [...new Set(medicos.map(m => m.especialidad))]);
   llenarSelect(selCiudad, [...new Set(medicos.map(m => m.ciudad))]);
+  console.log('✅ Selectores iniciales cargados.');
 
-  // Manejar selecciones encadenadas
+  // Encadenar selects
   selEspecialidad.addEventListener('change', e => {
-    const especialidad = e.target.value;
-    const filtrados = medicos.filter(m => m.especialidad === especialidad);
+    const esp = e.target.value;
+    const filtrados = medicos.filter(m => m.especialidad === esp);
     llenarSelect(selProfesional, [...new Set(filtrados.map(m => m.nombre))]);
     llenarSelect(selCentro, []);
+    console.log(`➡️ Especialidad seleccionada: ${esp}`);
   });
 
   selCiudad.addEventListener('change', e => {
-    const especialidad = selEspecialidad.value;
+    const esp = selEspecialidad.value;
     const ciudad = e.target.value;
-    const filtrados = medicos.filter(m =>
-      m.especialidad === especialidad && m.ciudad === ciudad
-    );
+    const filtrados = medicos.filter(m => m.especialidad === esp && m.ciudad === ciudad);
     llenarSelect(selProfesional, [...new Set(filtrados.map(m => m.nombre))]);
     llenarSelect(selCentro, [...new Set(filtrados.map(m => m.centro))]);
+    console.log(`➡️ Ciudad seleccionada: ${ciudad}`);
   });
 
   selProfesional.addEventListener('change', e => {
-    const profesional = e.target.value;
-    const filtrados = medicos.filter(m => m.nombre === profesional);
+    const prof = e.target.value;
+    const filtrados = medicos.filter(m => m.nombre === prof);
     llenarSelect(selCentro, [...new Set(filtrados.map(m => m.centro))]);
+    console.log(`➡️ Profesional seleccionado: ${prof}`);
   });
 
-  // Buscar y renderizar resultados
+  // Buscar
   form.addEventListener('submit', e => {
     e.preventDefault();
     const filtros = {
@@ -126,13 +133,14 @@ export async function initCitas() {
     };
     const resultados = filtrarMedicos(medicos, filtros);
     renderMedicos(resultados, 'resultados-citas');
+    console.log(`🔍 ${resultados.length} resultados filtrados.`);
   });
 
-  console.log('✅ Lógica de citas inicializada');
+  mostrarMensajeExito('✅ Módulo de citas inicializado correctamente.');
 }
 
 /**
- * Función auxiliar: llenar un <select> con opciones
+ * Llenar un select con opciones
  */
 function llenarSelect(select, opciones) {
   if (!select) return;
@@ -142,5 +150,56 @@ function llenarSelect(select, opciones) {
     opt.value = o;
     opt.textContent = o;
     select.appendChild(opt);
+  });
+}
+
+/**
+ * Mostrar un mensaje de error visible en pantalla
+ */
+function mostrarMensajeError(msg) {
+  let box = document.getElementById('mensaje-error');
+  if (!box) {
+    box = document.createElement('div');
+    box.id = 'mensaje-error';
+    box.className = 'fixed top-4 right-4 bg-red-600 text-white px-4 py-2 rounded-lg shadow-lg z-50';
+    document.body.appendChild(box);
+  }
+  box.textContent = msg;
+  console.error(msg);
+  setTimeout(() => box.remove(), 6000);
+}
+
+/**
+ * Mostrar un mensaje de éxito visible
+ */
+function mostrarMensajeExito(msg) {
+  let box = document.getElementById('mensaje-exito');
+  if (!box) {
+    box = document.createElement('div');
+    box.id = 'mensaje-exito';
+    box.className = 'fixed top-4 right-4 bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg z-50';
+    document.body.appendChild(box);
+  }
+  box.textContent = msg;
+  setTimeout(() => box.remove(), 4000);
+}
+
+/**
+ * Esperar hasta que un elemento esté presente en el DOM
+ */
+function esperarElemento(selector, timeout = 1500) {
+  return new Promise(resolve => {
+    const intervalo = 100;
+    let tiempo = 0;
+    const timer = setInterval(() => {
+      if (document.querySelector(selector)) {
+        clearInterval(timer);
+        resolve(true);
+      } else if ((tiempo += intervalo) >= timeout) {
+        clearInterval(timer);
+        console.warn(`⚠️ Elemento ${selector} no encontrado tras ${timeout}ms`);
+        resolve(false);
+      }
+    }, intervalo);
   });
 }
