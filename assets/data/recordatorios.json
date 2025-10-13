@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "tipo": "Vacuna",
+    "titulo": "Dosis Anual Antigripal",
+    "descripcion": "Campaña de vacunación de invierno. Disponible en todos los vacunatorios.",
+    "fecha": "2025-05-15",
+    "estado": "pendiente"
+  },
+  {
+    "id": 2,
+    "tipo": "Control",
+    "titulo": "Control Odontológico Anual",
+    "descripcion": "No olvides tu chequeo dental para prevenir caries y otros problemas.",
+    "fecha": "2025-06-20",
+    "estado": "pendiente"
+  },
+  {
+    "id": 3,
+    "tipo": "Cita",
+    "titulo": "Cita con Cardiólogo",
+    "descripcion": "Seguimiento de control de presión arterial con la Dra. Ana Pérez.",
+    "fecha": "2025-04-30",
+    "estado": "completado"
+  },
+  {
+    "id": 4,
+    "tipo": "Vacuna",
+    "titulo": "Refuerzo Tétanos",
+    "descripcion": "Aplicar refuerzo cada 10 años.",
+    "fecha": "2025-08-01",
+    "estado": "pendiente"
+  }
+]

@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "comercio": "Farmacia Central",
+    "descuento": "15% OFF",
+    "descripcion": "En todos los medicamentos y productos de perfumería.",
+    "categoria": "Salud",
+    "ciudad": "Asunción",
+    "imagen": "https://images.unsplash.com/photo-1585435557343-37c82c762661?q=80&w=800"
+  },
+  {
+    "id": 2,
+    "comercio": "Gimnasio Activo",
+    "descuento": "20% OFF",
+    "descripcion": "En la membresía mensual del plan premium.",
+    "categoria": "Deporte",
+    "ciudad": "Encarnación",
+    "imagen": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=800"
+  },
+  {
+    "id": 3,
+    "comercio": "Librería El Saber",
+    "descuento": "10% OFF",
+    "descripcion": "En todos los libros de texto y literatura.",
+    "categoria": "Educación",
+    "ciudad": "Asunción",
+    "imagen": "https://images.unsplash.com/photo-1532012197267-da84d127e765?q=80&w=800"
+  },
+  {
+    "id": 4,
+    "comercio": "Clínica Dental Sonrisa",
+    "descuento": "25% OFF",
+    "descripcion": "En limpiezas dentales y blanqueamientos.",
+    "categoria": "Salud",
+    "ciudad": "Ciudad del Este",
+    "imagen": "https://images.unsplash.com/photo-1629905675717-a1a85626975b?q=80&w=800"
+  },
+  {
+    "id": 5,
+    "comercio": "Restaurante Verde Vida",
+    "descuento": "15% OFF",
+    "descripcion": "En todo el menú de ensaladas y jugos naturales.",
+    "categoria": "Gastronomía",
+    "ciudad": "Asunción",
+    "imagen": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=800"
+  },
+  {
+    "id": 6,
+    "comercio": "Óptica Visión Clara",
+    "descuento": "30% OFF",
+    "descripcion": "En la compra de armazones seleccionados.",
+    "categoria": "Salud",
+    "ciudad": "Encarnación",
+    "imagen": "https://images.unsplash.com/photo-1575444879742-8316a19c5a9a?q=80&w=800"
+  }
+]

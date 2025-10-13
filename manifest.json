@@ -1,0 +1,21 @@
+{
+  "name": "Click-Salud",
+  "short_name": "Click-Salud",
+  "description": "Prototipo MVP de una PWA para la gestión de salud en Paraguay.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#317EFB",
+  "icons": [
+    {
+      "src": "assets/img/clicksaludLogo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/img/clicksaludLogo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

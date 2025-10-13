@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beneficios - Click Salud</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+    <script src="../assets/js/app.js" defer></script>
+    <script src="../assets/js/theme.js" defer></script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-manrope">
+    <main class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+        <div class="flex flex-col gap-4 mb-8">
+            <h1 class="text-3xl sm:text-4xl font-bold text-background-dark dark:text-background-light">Beneficios</h1>
+            <p class="text-base text-background-dark/70 dark:text-background-light/70">
+                Accede a descuentos exclusivos en nuestra red de comercios afiliados.
+            </p>
+        </div>
+
+        <!-- Barra de filtros -->
+        <div class="flex flex-wrap gap-4 mb-8">
+            <button class="flex items-center gap-x-2 h-10 px-4 rounded-lg bg-primary/10 hover:bg-primary/20 text-sm font-medium">
+                <span>Categoría</span>
+                <span class="material-symbols-outlined">expand_more</span>
+            </button>
+            <button class="flex items-center gap-x-2 h-10 px-4 rounded-lg bg-primary/10 hover:bg-primary/20 text-sm font-medium">
+                <span>Ciudad</span>
+                <span class="material-symbols-outlined">expand_more</span>
+            </button>
+        </div>
+
+        <!-- Grilla de beneficios -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Tarjeta de beneficio (ejemplo) -->
+            <div class="bg-white dark:bg-background-dark/50 rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden">
+                <div class="relative">
+                    <div class="w-full aspect-video bg-cover bg-center" style="background-image:url('/assets/img/farmacia.jpg');"></div>
+                    <div class="absolute top-4 right-4 bg-primary text-white text-sm font-bold px-3 py-1 rounded-full">15% OFF</div>
+                </div>
+                <div class="p-5">
+                    <h3 class="text-lg font-bold text-background-dark dark:text-background-light mb-2">Farmacia Central</h3>
+                    <p class="text-sm text-background-dark/70 dark:text-background-light/70">Presenta tu credencial digital al momento de pagar.</p>
+                </div>
+            </div>
+
+            <!-- Tarjetas de beneficios dinámicas -->
+            <script>
+                const beneficios = [
+                    {
+                        "id": 1,
+                        "comercio": "Farmacia Central",
+                        "descuento": "15% OFF",
+                        "descripcion": "En todos los medicamentos y productos de perfumería.",
+                        "categoria": "Salud",
+                        "ciudad": "Asunción",
+                        "imagen": "https://images.unsplash.com/photo-1585435557343-37c82c762661?q=80&w=800"
+                    },
+                    {
+                        "id": 2,
+                        "comercio": "Gimnasio Activo",
+                        "descuento": "20% OFF",
+                        "descripcion": "En la membresía mensual del plan premium.",
+                        "categoria": "Deporte",
+                        "ciudad": "Encarnación",
+                        "imagen": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=800"
+                    },
+                    {
+                        "id": 3,
+                        "comercio": "Librería El Saber",
+                        "descuento": "10% OFF",
+                        "descripcion": "En todos los libros de texto y literatura.",
+                        "categoria": "Educación",
+                        "ciudad": "Asunción",
+                        "imagen": "https://images.unsplash.com/photo-1532012197267-da84d127e765?q=80&w=800"
+                    },
+                    {
+                        "id": 4,
+                        "comercio": "Clínica Dental Sonrisa",
+                        "descuento": "25% OFF",
+                        "descripcion": "En limpiezas dentales y blanqueamientos.",
+                        "categoria": "Salud",
+                        "ciudad": "Ciudad del Este",
+                        "imagen": "https://images.unsplash.com/photo-1629905675717-a1a85626975b?q=80&w=800"
+                    },
+                    {
+                        "id": 5,
+                        "comercio": "Restaurante Verde Vida",
+                        "descuento": "15% OFF",
+                        "descripcion": "En todo el menú de ensaladas y jugos naturales.",
+                        "categoria": "Gastronomía",
+                        "ciudad": "Asunción",
+                        "imagen": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=800"
+                    },
+                    {
+                        "id": 6,
+                        "comercio": "Óptica Visión Clara",
+                        "descuento": "30% OFF",
+                        "descripcion": "En la compra de armazones seleccionados.",
+                        "categoria": "Salud",
+                        "ciudad": "Encarnación",
+                        "imagen": "https://images.unsplash.com/photo-1575444879742-8316a19c5a9a?q=80&w=800"
+                    }
+                ];
+
+                const grillaBeneficios = document.querySelector('.grid');
+
+                beneficios.forEach(beneficio => {
+                    const tarjeta = document.createElement('div');
+                    tarjeta.classList.add('bg-white', 'dark:bg-background-dark/50', 'rounded-xl', 'shadow-sm', 'hover:shadow-lg', 'transition-shadow', 'duration-300', 'overflow-hidden');
+
+                    tarjeta.innerHTML = `
+                        <div class="relative">
+                            <div class="w-full aspect-video bg-cover bg-center" style="background-image:url('${beneficio.imagen}');"></div>
+                            <div class="absolute top-4 right-4 bg-primary text-white text-sm font-bold px-3 py-1 rounded-full">${beneficio.descuento}</div>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="text-lg font-bold text-background-dark dark:text-background-light mb-2">${beneficio.comercio}</h3>
+                            <p class="text-sm text-background-dark/70 dark:text-background-light/70">${beneficio.descripcion}</p>
+                        </div>
+                    `;
+
+                    grillaBeneficios.appendChild(tarjeta);
+                });
+            </script>
+        </div>
+    </main>
+</body>
+</html>

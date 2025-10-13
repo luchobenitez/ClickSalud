@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Directorio Médico - Click Salud</title>
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+  <script src="../assets/js/app.js" defer></script>
+  <script src="../assets/js/theme.js" defer></script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-manrope">
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Directorio Médico</h2>
+    <p class="text-gray-600 dark:text-gray-400 mb-8">Explora la red de profesionales de salud disponibles en los distintos centros del país.</p>
+
+    <form id="form-directorio" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div>
+        <label for="filtro-especialidad" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Especialidad</label>
+        <select id="filtro-especialidad" class="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2"></select>
+      </div>
+
+      <div>
+        <label for="filtro-ciudad" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Ciudad</label>
+        <select id="filtro-ciudad" class="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2"></select>
+      </div>
+
+      <div>
+        <label for="filtro-profesional" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Profesional</label>
+        <select id="filtro-profesional" class="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2"></select>
+      </div>
+
+      <div>
+        <label for="filtro-centro" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Centro de Salud</label>
+        <select id="filtro-centro" class="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2"></select>
+      </div>
+
+      <div class="md:col-span-2 lg:col-span-4 flex justify-end">
+        <button type="submit" class="bg-primary text-white font-bold px-6 py-2 rounded-lg hover:bg-primary/90">Buscar</button>
+      </div>
+    </form>
+
+    <div id="resultados-directorio" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+  </main>
+
+  <script type="module">
+    import { obtenerMedicos, filtrarMedicos, renderMedicos } from '../assets/js/medicos.js';
+
+    let medicos = [];
+
+    (async () => {
+      medicos = await obtenerMedicos();
+
+      llenarSelect('filtro-especialidad', [...new Set(medicos.map(m => m.especialidad))]);
+      llenarSelect('filtro-ciudad', [...new Set(medicos.map(m => m.ciudad))]);
+
+      document.getElementById('filtro-especialidad').addEventListener('change', e => {
+        const esp = e.target.value;
+        const filtrados = medicos.filter(m => m.especialidad === esp);
+        llenarSelect('filtro-ciudad', [...new Set(filtrados.map(m => m.ciudad))]);
+        llenarSelect('filtro-profesional', [...new Set(filtrados.map(m => m.nombre))]);
+        llenarSelect('filtro-centro', []);
+      });
+
+      document.getElementById('filtro-ciudad').addEventListener('change', e => {
+        const esp = document.getElementById('filtro-especialidad').value;
+        const ciudad = e.target.value;
+        const filtrados = medicos.filter(m => m.especialidad === esp && m.ciudad === ciudad);
+        llenarSelect('filtro-profesional', [...new Set(filtrados.map(m => m.nombre))]);
+        llenarSelect('filtro-centro', [...new Set(filtrados.map(m => m.centro))]);
+      });
+
+      document.getElementById('filtro-profesional').addEventListener('change', e => {
+        const profesional = e.target.value;
+        const filtrados = medicos.filter(m => m.nombre === profesional);
+        llenarSelect('filtro-centro', [...new Set(filtrados.map(m => m.centro))]);
+      });
+    })();
+
+    function llenarSelect(id, opciones) {
+      const sel = document.getElementById(id);
+      sel.innerHTML = '<option value="">Seleccionar</option>';
+      opciones.forEach(o => sel.innerHTML += `<option value="${o}">${o}</option>`);
+    }
+
+    document.getElementById('form-directorio').addEventListener('submit', e => {
+      e.preventDefault();
+      const filtros = {
+        especialidad: document.getElementById('filtro-especialidad').value,
+        ciudad: document.getElementById('filtro-ciudad').value,
+        profesional: document.getElementById('filtro-profesional').value,
+        centro: document.getElementById('filtro-centro').value,
+      };
+      const resultados = filtrarMedicos(medicos, filtros);
+      renderMedicos(resultados, 'resultados-directorio');
+    });
+  </script>
+</body>
+</html>

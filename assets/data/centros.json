@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "nombre": "Hospital de Clínicas",
+    "direccion": "Av. Dr. José P. Montero, Asunción",
+    "horario": "Abierto 24 horas",
+    "contacto": "(021) 585-585",
+    "coordenadas": {
+      "lat": -25.3036,
+      "lng": -57.5925
+    },
+    "estado": "abierto"
+  },
+  {
+    "id": 2,
+    "nombre": "Centro de Salud N° 9",
+    "direccion": "Av. Eusebio Ayala km 4.5, Asunción",
+    "horario": "07:00 - 17:00",
+    "contacto": "(021) 507-340",
+    "coordenadas": {
+      "lat": -25.3022,
+      "lng": -57.5833
+    },
+    "estado": "abierto"
+  },
+  {
+    "id": 3,
+    "nombre": "Hospital Regional de Encarnación",
+    "direccion": "Padre Kreusser, Encarnación",
+    "horario": "Abierto 24 horas",
+    "contacto": "(071) 202-222",
+    "coordenadas": {
+      "lat": -27.3306,
+      "lng": -55.8667
+    },
+    "estado": "cerrado"
+  },
+  {
+    "id": 4,
+    "nombre": "USF San Miguel",
+    "direccion": "Barrio San Miguel, Ciudad del Este",
+    "horario": "07:00 - 15:00",
+    "contacto": "N/A",
+    "coordenadas": {
+      "lat": -25.5094,
+      "lng": -54.6111
+    },
+    "estado": "abierto"
+  }
+]

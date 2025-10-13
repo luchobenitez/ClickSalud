@@ -1,0 +1,163 @@
+<!-- Contenido: Centros de Salud -->
+<div class="flex flex-col md:flex-row h-full">
+
+    <!-- Panel Lateral (Buscador y Lista) -->
+    <aside class="w-full md:max-w-md lg:max-w-lg flex flex-col border-r border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+        
+        <!-- Controles de Búsqueda y Filtro -->
+        <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+            <h2 class="text-2xl font-bold mb-4">Centros de Salud</h2>
+            
+            <!-- Barra de Búsqueda -->
+            <div class="relative">
+                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
+                <input id="search-centros" class="w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg py-2 pl-10 pr-4 focus:ring-2 focus:ring-blue-500" placeholder="Buscar centro de salud..." type="text">
+            </div>
+
+            <!-- Filtro de Disponibilidad -->
+            <div class="flex items-center justify-between mt-4">
+                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Solo abiertos ahora</span>
+                <label for="toggle-abiertos" class="flex items-center cursor-pointer">
+                    <div class="relative">
+                        <input type="checkbox" id="toggle-abiertos" class="sr-only">
+                        <div class="block bg-gray-300 dark:bg-gray-600 w-12 h-6 rounded-full"></div>
+                        <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform"></div>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <!-- Listado de Centros -->
+        <div id="lista-centros" class="flex-1 overflow-y-auto p-4 space-y-4">
+            <!-- Las tarjetas de centros se insertarán aquí dinámicamente -->
+        </div>
+    </aside>
+
+    <!-- Mapa Principal -->
+    <main class="hidden md:flex flex-1 bg-gray-200 dark:bg-gray-900 items-center justify-center relative">
+        <!-- Mockup del Mapa -->
+        <div class="text-center text-gray-500">
+            <span class="material-symbols-outlined text-9xl">map</span>
+            <p>Vista de Mapa</p>
+        </div>
+
+        <!-- Controles Flotantes del Mapa -->
+        <div class="absolute bottom-4 right-4 flex flex-col space-y-2">
+            <button class="bg-white dark:bg-gray-800 p-3 rounded-full shadow-lg hover:bg-gray-100 dark:hover:bg-gray-700" aria-label="Acercar">
+                <span class="material-symbols-outlined">add</span>
+            </button>
+            <button class="bg-white dark:bg-gray-800 p-3 rounded-full shadow-lg hover:bg-gray-100 dark:hover:bg-gray-700" aria-label="Alejar">
+                <span class="material-symbols-outlined">remove</span>
+            </button>
+            <button class="bg-white dark:bg-gray-800 p-3 rounded-full shadow-lg hover:bg-gray-100 dark:hover:bg-gray-700" aria-label="Mi ubicación">
+                <span class="material-symbols-outlined">my_location</span>
+            </button>
+        </div>
+    </main>
+</div>
+
+<style>
+    /* Estilo para el switch de "Solo abiertos ahora" */
+    #toggle-abiertos:checked ~ .block {
+        background-color: #11d4d4; /* Color primario */
+    }
+    #toggle-abiertos:checked ~ .dot {
+        transform: translateX(1.5rem);
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const listaCentrosEl = document.getElementById('lista-centros');
+    const searchInput = document.getElementById('search-centros');
+    const abiertosToggle = document.getElementById('toggle-abiertos');
+
+    let todosLosCentros = [];
+
+    /**
+     * Renderiza la lista de centros de salud en el DOM.
+     * @param {Array} centros - El array de centros a mostrar.
+     */
+    const renderCentros = (centros) => {
+        if (!listaCentrosEl) return;
+        listaCentrosEl.innerHTML = '';
+
+        if (centros.length === 0) {
+            listaCentrosEl.innerHTML = '<p class="text-center text-gray-500 dark:text-gray-400">No se encontraron centros.</p>';
+            return;
+        }
+
+        centros.forEach(centro => {
+            const estadoClass = centro.estado === 'abierto' ? 'text-green-500' : 'text-red-500';
+            const estadoTexto = centro.estado === 'abierto' ? 'Abierto' : 'Cerrado';
+
+            const centroCard = `
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex items-start space-x-4">
+                        <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(centro.nombre)}&background=random" alt="Logo de ${centro.nombre}" class="w-16 h-16 rounded-lg object-cover">
+                        <div class="flex-1">
+                            <h3 class="font-bold text-lg">${centro.nombre}</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">${centro.direccion}</p>
+                            <div class="flex items-center text-sm text-gray-500 dark:text-gray-300 mt-2 space-x-2">
+                                <span class="material-symbols-outlined text-base">schedule</span>
+                                <span class="${estadoClass} font-semibold">${estadoTexto}</span>
+                                <span>- ${centro.horario}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex gap-2 mt-4">
+                        <a href="https://maps.google.com/?q=${encodeURIComponent(centro.direccion)}" target="_blank" rel="noopener noreferrer" class="flex-1 text-center bg-blue-600 text-white rounded-lg py-2 font-semibold hover:bg-blue-700 transition-colors">
+                            Cómo llegar
+                        </a>
+                        <a href="tel:${centro.contacto}" class="flex-1 text-center bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300 rounded-lg py-2 font-semibold hover:bg-blue-200 dark:hover:bg-blue-900 transition-colors">
+                            Llamar
+                        </a>
+                    </div>
+                </div>
+            `;
+            listaCentrosEl.innerHTML += centroCard;
+        });
+    };
+
+    /**
+     * Filtra los centros basado en el texto de búsqueda y el estado de "abierto".
+     */
+    const filtrarYRenderizar = () => {
+        const textoBusqueda = searchInput.value.toLowerCase();
+        const soloAbiertos = abiertosToggle.checked;
+
+        const centrosFiltrados = todosLosCentros.filter(centro => {
+            const coincideBusqueda = centro.nombre.toLowerCase().includes(textoBusqueda) || centro.direccion.toLowerCase().includes(textoBusqueda);
+            const coincideAbierto = !soloAbiertos || centro.estado === 'abierto';
+            return coincideBusqueda && coincideAbierto;
+        });
+
+        renderCentros(centrosFiltrados);
+    };
+
+    /**
+     * Carga los datos iniciales de los centros desde el JSON.
+     */
+    const initCentros = async () => {
+        try {
+            const response = await fetch('assets/data/centros.json');
+            if (!response.ok) throw new Error('No se pudo cargar la lista de centros.');
+            todosLosCentros = await response.json();
+            renderCentros(todosLosCentros);
+
+            // Añadir listeners después de cargar los datos
+            searchInput.addEventListener('input', filtrarYRenderizar);
+            abiertosToggle.addEventListener('change', filtrarYRenderizar);
+
+        } catch (error) {
+            console.error(error);
+            if (listaCentrosEl) {
+                listaCentrosEl.innerHTML = '<p class="text-center text-red-500">Error al cargar los centros de salud.</p>';
+            }
+        }
+    };
+
+    // Iniciar la lógica de la página
+    initCentros();
+});
+</script>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click-Salud - Tu Salud en un Click</title>
+    <meta name="description" content="Prototipo MVP de una PWA para la gestión de salud en Paraguay.">
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#317EFB"/>
+
+    <!-- Iconos y Fuentes -->
+    <link rel="icon" href="assets/img/clicksaludLogo.png" type="image/png">
+    <link rel="apple-touch-icon" href="assets/img/clicksaludLogo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class'
+        }
+    </script>
+
+    <!-- Tailwind CSS (vía CDN para prototipado rápido) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 font-sans">
+
+    <!-- Contenedor principal de la aplicación -->
+    <div id="app-container" class="flex flex-col min-h-screen">
+
+        <!-- Header (se inyectará aquí) -->
+        <header id="main-header"></header>
+
+        <!-- Menú de navegación (se inyectará aquí) -->
+        <nav id="main-nav"></nav>
+
+        <!-- Contenido principal (se inyectará aquí) -->
+        <main id="app-content" class="flex-grow container mx-auto p-4">
+            <!-- El contenido de cada página se cargará aquí -->
+        </main>
+
+        <!-- Footer (se inyectará aquí) -->
+        <footer id="main-footer"></footer>
+
+    </div>
+
+    <!-- Scripts de la aplicación -->
+    <script src="assets/js/app.js"></script>
+</body>
+</html>

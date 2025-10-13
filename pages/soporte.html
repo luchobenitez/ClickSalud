@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soporte - Click Salud</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+    <script src="../assets/js/app.js" defer></script>
+    <script src="../assets/js/theme.js" defer></script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-manrope">
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Centro de Soporte</h2>
+        <p class="text-gray-600 dark:text-gray-400 mb-8">Encuentra respuestas o contáctanos para recibir ayuda.</p>
+
+        <!-- Preguntas frecuentes -->
+        <section class="mb-12">
+            <h3 class="text-xl font-bold mb-4">Preguntas frecuentes</h3>
+
+            <div class="mb-4">
+                <label for="select-categoria" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Seleccione una categoría:</label>
+                <select id="select-categoria" class="mt-1 block w-full p-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    <option value="">Todas las categorías</option>
+                    <!-- Opciones de categoría se cargarán con JS -->
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label for="select-pregunta" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Seleccione una pregunta:</label>
+                <select id="select-pregunta" class="mt-1 block w-full p-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    <option value="">Todas las preguntas</option>
+                    <!-- Opciones de pregunta se cargarán con JS -->
+                </select>
+            </div>
+
+            <div id="respuesta-container" class="mt-4 p-4 bg-gray-100 dark:bg-gray-700 rounded-md">
+                <!-- Aquí se mostrará la respuesta -->
+            </div>
+        </section>
+
+        <!-- Formulario de contacto -->
+        <section class="mb-12">
+            <h3 class="text-xl font-bold mb-4">Enviar una solicitud</h3>
+            <form class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-medium mb-1">Nombre completo</label>
+                    <input type="text" class="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">Correo electrónico</label>
+                    <input type="email" class="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2">
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-medium mb-1">Tipo de consulta</label>
+                    <select class="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2">
+                        <option>Soporte técnico</option>
+                        <option>Acceso o credenciales</option>
+                        <option>Otra consulta</option>
+                    </select>
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-medium mb-1">Descripción</label>
+                    <textarea rows="4" class="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2"></textarea>
+                </div>
+                <div class="md:col-span-2 flex justify-end">
+                    <button type="submit" class="bg-primary text-white font-bold px-6 py-2 rounded-lg hover:bg-primary/90">Enviar solicitud</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Contacto directo -->
+        <section class="bg-primary/10 dark:bg-primary/20 rounded-lg p-6">
+            <h3 class="text-lg font-bold mb-2">Contáctanos directamente</h3>
+            <ul class="space-y-2 text-sm">
+                <li>📞 <strong>Teléfono:</strong> <a href="tel:+59521555000" class="text-primary hover:underline">+595 21 555 000</a></li>
+                <li>✉️ <strong>Email:</strong> <a href="mailto:soporte@clicksalud.gov.py" class="text-primary hover:underline">soporte@clicksalud.gov.py</a></li>
+                <li>💬 <strong>Chat:</strong> Disponible próximamente</li>
+            </ul>
+        </section>
+    </main>
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+    const selectCategoria = document.getElementById('select-categoria');
+    const selectPregunta = document.getElementById('select-pregunta');
+    const respuestaContainer = document.getElementById('respuesta-container');
+
+    try {
+        // ✅ Ruta relativa corregida
+        const response = await fetch('../assets/data/faqs.json');
+        const faqsData = await response.json();
+
+        // 🔹 1. Llenar las categorías únicas
+        const categorias = [...new Set(faqsData.map(faq => faq.categoria))];
+        categorias.forEach(categoria => {
+            const option = document.createElement('option');
+            option.value = categoria;
+            option.textContent = categoria;
+            selectCategoria.appendChild(option);
+        });
+
+        // 🔹 2. Función para llenar las preguntas
+        const llenarPreguntas = (categoriaSeleccionada) => {
+            selectPregunta.innerHTML = '<option value="">Seleccionar pregunta</option>';
+            let preguntasFiltradas = [];
+
+            // Si no hay categoría seleccionada, mostrar todas las preguntas
+            if (!categoriaSeleccionada) {
+                faqsData.forEach(faq => {
+                    preguntasFiltradas = preguntasFiltradas.concat(faq.preguntas);
+                });
+            } else {
+                const categoria = faqsData.find(f => f.categoria === categoriaSeleccionada);
+                preguntasFiltradas = categoria ? categoria.preguntas : [];
+            }
+
+            preguntasFiltradas.forEach(p => {
+                const option = document.createElement('option');
+                option.value = p.pregunta;
+                option.textContent = p.pregunta;
+                selectPregunta.appendChild(option);
+            });
+        };
+
+        // 🔹 3. Listener para categoría
+        selectCategoria.addEventListener('change', () => {
+            const categoriaSeleccionada = selectCategoria.value;
+            llenarPreguntas(categoriaSeleccionada);
+            respuestaContainer.innerHTML = '';
+        });
+
+        // 🔹 4. Listener para pregunta
+        selectPregunta.addEventListener('change', () => {
+            const preguntaSeleccionada = selectPregunta.value;
+            const categoriaSeleccionada = selectCategoria.value;
+
+            let faqSeleccionado = null;
+
+            // Buscar en la categoría seleccionada o en todo el archivo si no hay filtro
+            if (!categoriaSeleccionada) {
+                faqsData.forEach(cat => {
+                    const p = cat.preguntas.find(p => p.pregunta === preguntaSeleccionada);
+                    if (p) faqSeleccionado = p;
+                });
+            } else {
+                const categoria = faqsData.find(f => f.categoria === categoriaSeleccionada);
+                faqSeleccionado = categoria?.preguntas.find(p => p.pregunta === preguntaSeleccionada);
+            }
+
+            if (faqSeleccionado) {
+                respuestaContainer.innerHTML = `
+                    <p class="text-gray-700 dark:text-gray-200">${faqSeleccionado.respuesta}</p>
+                `;
+            } else {
+                respuestaContainer.innerHTML = '<p class="text-red-500">No se encontró respuesta.</p>';
+            }
+        });
+
+        // 🔹 5. Inicializar con todas las preguntas
+        llenarPreguntas('');
+
+    } catch (error) {
+        console.error('Error al cargar las preguntas frecuentes:', error);
+        respuestaContainer.innerHTML = `
+            <p class="text-red-500">No se pudieron cargar las preguntas frecuentes.</p>
+        `;
+    }
+});
+</script>
+
+</body>
+</html>

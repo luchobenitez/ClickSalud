@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Citas - Click Salud</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+    <script src="../assets/js/app.js" defer></script>
+    <script src="../assets/js/theme.js" defer></script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-manrope">
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Solicitar cita médica</h2>
+        <p class="text-gray-600 dark:text-gray-400 mb-8">Selecciona la especialidad, ciudad y profesional para agendar una cita en el centro de salud correspondiente.</p>
+
+        <!-- Formulario de filtros -->
+        <form id="form-citas" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <div>
+                <label for="select-especialidad" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Especialidad</label>
+                <select id="select-especialidad" class="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2">
+                    <option value="">Seleccionar</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="select-ciudad" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Ciudad</label>
+                <select id="select-ciudad" class="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2">
+                    <option value="">Seleccionar</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="select-profesional" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Profesional</label>
+                <select id="select-profesional" class="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2">
+                    <option value="">Seleccionar</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="select-centro" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Centro de Salud</label>
+                <select id="select-centro" class="w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2">
+                    <option value="">Seleccionar</option>
+                </select>
+            </div>
+
+            <div class="md:col-span-2 lg:col-span-4 flex justify-end">
+                <button type="submit" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90">Buscar Médicos</button>
+            </div>
+        </form>
+
+        <!-- Resultados -->
+        <div id="resultados-citas" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8"></div>
+    </main>
+
+    <script type="module">
+        import { obtenerMedicos, filtrarMedicos, renderMedicos } from '../assets/js/medicos.js';
+
+        let medicos = [];
+
+        (async () => {
+            medicos = await obtenerMedicos();
+
+            llenarSelect('select-especialidad', [...new Set(medicos.map(m => m.especialidad))]);
+            llenarSelect('select-ciudad', [...new Set(medicos.map(m => m.ciudad))]);
+
+            document.getElementById('select-especialidad').addEventListener('change', e => {
+                const esp = e.target.value;
+                const filtrados = medicos.filter(m => m.especialidad === esp);
+                llenarSelect('select-profesional', [...new Set(filtrados.map(m => m.nombre))]);
+                llenarSelect('select-centro', []);
+            });
+
+            document.getElementById('select-ciudad').addEventListener('change', e => {
+                const esp = document.getElementById('select-especialidad').value;
+                const ciudad = e.target.value;
+                const filtrados = medicos.filter(m => m.especialidad === esp && m.ciudad === ciudad);
+                llenarSelect('select-profesional', [...new Set(filtrados.map(m => m.nombre))]);
+                llenarSelect('select-centro', [...new Set(filtrados.map(m => m.centro))]);
+            });
+
+            document.getElementById('select-profesional').addEventListener('change', e => {
+                const profesional = e.target.value;
+                const filtrados = medicos.filter(m => m.nombre === profesional);
+                llenarSelect('select-centro', [...new Set(filtrados.map(m => m.centro))]);
+            });
+        })();
+
+        function llenarSelect(id, opciones) {
+            const sel = document.getElementById(id);
+            sel.innerHTML = '<option value="">Seleccionar</option>';
+            opciones.forEach(o => sel.innerHTML += `<option value="${o}">${o}</option>`);
+        }
+
+        document.getElementById('form-citas').addEventListener('submit', e => {
+            e.preventDefault();
+            const filtros = {
+                especialidad: document.getElementById('select-especialidad').value,
+                ciudad: document.getElementById('select-ciudad').value,
+                profesional: document.getElementById('select-profesional').value,
+                centro: document.getElementById('select-centro').value,
+            };
+            const resultados = filtrarMedicos(medicos, filtros);
+            renderMedicos(resultados, 'resultados-citas');
+        });
+    </script>
+</body>
+</html>

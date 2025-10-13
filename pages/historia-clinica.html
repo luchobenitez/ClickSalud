@@ -1,0 +1,103 @@
+<!-- Contenido: Mi Historia Clínica -->
+<main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow">
+  <div class="max-w-4xl mx-auto">
+    <h2 class="text-3xl font-bold mb-8 text-gray-800 dark:text-gray-200">Mi Historia Clínica</h2>
+
+    <!-- Secciones médicas -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      
+      <!-- Tarjeta: Vacunas -->
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-lg flex flex-col justify-between hover:shadow-lg transition-shadow border border-gray-200 dark:border-gray-700">
+        <div>
+          <h3 class="text-lg font-bold text-gray-900 dark:text-gray-100">Vacunas</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Registro de inmunizaciones recibidas.</p>
+        </div>
+        <a href="#vacunas-detalle" class="mt-4 text-sm font-semibold text-blue-600 dark:text-blue-400 hover:underline">Ver detalles →</a>
+      </div>
+
+      <!-- Tarjeta: Alergias -->
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-lg flex flex-col justify-between hover:shadow-lg transition-shadow border border-gray-200 dark:border-gray-700">
+        <div>
+          <h3 class="text-lg font-bold text-gray-900 dark:text-gray-100">Alergias</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Listado de alergias conocidas.</p>
+        </div>
+        <a href="#alergias-detalle" class="mt-4 text-sm font-semibold text-blue-600 dark:text-blue-400 hover:underline">Ver detalles →</a>
+      </div>
+
+      <!-- Tarjeta: Medicamentos -->
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-lg flex flex-col justify-between hover:shadow-lg transition-shadow border border-gray-200 dark:border-gray-700">
+        <div>
+          <h3 class="text-lg font-bold text-gray-900 dark:text-gray-100">Medicamentos</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Historial de medicación recetada.</p>
+        </div>
+        <a href="#medicamentos-detalle" class="mt-4 text-sm font-semibold text-blue-600 dark:text-blue-400 hover:underline">Ver detalles →</a>
+      </div>
+
+      <!-- Tarjeta: Últimas Consultas -->
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-lg flex flex-col justify-between hover:shadow-lg transition-shadow border border-gray-200 dark:border-gray-700">
+        <div>
+          <h3 class="text-lg font-bold text-gray-900 dark:text-gray-100">Últimas Consultas</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Resumen de visitas médicas recientes.</p>
+        </div>
+        <a href="#consultas-detalle" class="mt-4 text-sm font-semibold text-blue-600 dark:text-blue-400 hover:underline">Ver detalles →</a>
+      </div>
+
+      <!-- Tarjeta: Estudios Recientes (ocupa dos columnas) -->
+      <div class="md:col-span-2 bg-white dark:bg-gray-800 p-6 rounded-lg flex flex-col justify-between hover:shadow-lg transition-shadow border border-gray-200 dark:border-gray-700">
+        <div>
+          <h3 class="text-lg font-bold text-gray-900 dark:text-gray-100">Estudios Recientes</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Resultados de laboratorio, radiografías y otros estudios.</p>
+        </div>
+        <a href="#estudios-detalle" class="mt-4 text-sm font-semibold text-blue-600 dark:text-blue-400 hover:underline">Ver detalles →</a>
+      </div>
+    </div>
+
+    <!-- Gestión de Consentimientos -->
+    <section class="mt-12 p-6 rounded-lg bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800">
+      <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">Gestión de Consentimientos</h3>
+      <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">
+        Administre quién puede ver su información clínica para una atención coordinada y segura.
+      </p>
+      <div class="mt-6 flex flex-col sm:flex-row gap-4">
+        <button id="btn-ver-accesos" class="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-white dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 border border-gray-300 dark:border-gray-500 font-semibold transition-colors">
+          <span class="material-symbols-outlined text-base">visibility</span>
+          Ver accesos
+        </button>
+        <button id="btn-otorgar" class="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 font-bold transition-colors">
+          <span class="material-symbols-outlined text-base">add</span>
+          Otorgar Acceso
+        </button>
+        <button id="btn-revocar" class="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-red-100 text-red-700 dark:bg-red-900/50 dark:text-red-300 hover:bg-red-200 dark:hover:bg-red-900 font-semibold transition-colors">
+          <span class="material-symbols-outlined text-base">remove</span>
+          Revocar Acceso
+        </button>
+      </div>
+    </section>
+  </div>
+</main>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const btnVerAccesos = document.getElementById('btn-ver-accesos');
+    const btnOtorgar = document.getElementById('btn-otorgar');
+    const btnRevocar = document.getElementById('btn-revocar');
+
+    if(btnVerAccesos) {
+        btnVerAccesos.addEventListener('click', () => {
+            alert('Acción simulada: Mostrando un listado de profesionales y centros con acceso a su historia clínica.');
+        });
+    }
+
+    if(btnOtorgar) {
+        btnOtorgar.addEventListener('click', () => {
+            alert('Acción simulada: Abriendo un formulario para otorgar un nuevo permiso de acceso a un profesional.');
+        });
+    }
+
+    if(btnRevocar) {
+        btnRevocar.addEventListener('click', () => {
+            alert('Acción simulada: Abriendo un panel para seleccionar y revocar permisos existentes.');
+        });
+    }
+});
+</script>

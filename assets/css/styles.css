@@ -1,0 +1,32 @@
+/* Estilos personalizados para Click-Salud */
+
+/* Aplicar una transición suave a los colores para el modo oscuro */
+body, .bg-white, .bg-gray-100, .bg-gray-800, .bg-gray-900, .text-gray-800, .text-gray-200 {
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+/* Estilo para los íconos de Material Symbols */
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+
+/* Estilo para las tarjetas del menú principal */
+.menu-card {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.menu-card:hover {
+    transform: translateY(-5px);
+}
+
+/* styles.css */
+#theme-icon {
+  transition: transform 0.3s ease;
+}
+#theme-toggle:active #theme-icon {
+  transform: rotate(180deg);
+}

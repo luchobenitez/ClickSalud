@@ -1,0 +1,147 @@
+[
+  {
+    "categoria": "Uso general de la aplicación",
+    "preguntas": [
+      {
+        "pregunta": "¿Qué es Click-Salud y para qué sirve?",
+        "respuesta": "Click-Salud es una aplicación PWA desarrollada por el Ministerio de Salud para facilitar la gestión de citas médicas, resultados y seguimiento de pacientes de forma digital y segura."
+      },
+      {
+        "pregunta": "¿Cómo puedo registrarme por primera vez en la aplicación?",
+        "respuesta": "Podés registrarte utilizando tu número de cédula y correo electrónico. Luego recibirás un enlace de activación para crear tu contraseña."
+      },
+      {
+        "pregunta": "¿Puedo acceder a Click-Salud desde mi teléfono y mi computadora?",
+        "respuesta": "Sí, Click-Salud es una aplicación PWA y podés acceder desde cualquier dispositivo con un navegador web moderno."
+      },
+      {
+        "pregunta": "¿Necesito conexión a internet para usar la aplicación?",
+        "respuesta": "Algunas funciones básicas (como ver citas agendadas) pueden estar disponibles sin conexión, pero la mayoría requiere acceso a internet."
+      },
+      {
+        "pregunta": "¿Cómo puedo actualizar mis datos personales?",
+        "respuesta": "Accedé a la sección 'Mi Perfil' y editá la información que desees modificar. Recordá guardar los cambios."
+      },
+      {
+        "pregunta": "¿Cómo recupero mi contraseña si la olvidé?",
+        "respuesta": "En la pantalla de inicio de sesión, hacé clic en '¿Olvidaste tu contraseña?' y seguí las instrucciones para restablecerla."
+      },
+      {
+        "pregunta": "¿Por qué no puedo iniciar sesión aunque mi usuario es correcto?",
+        "respuesta": "Verificá que estés usando el correo electrónico y la contraseña correctos. Si el problema persiste, contactá al soporte técnico."
+      },
+      {
+        "pregunta": "¿Qué hago si la aplicación se queda cargando o no responde?",
+        "respuesta": "Cerrá la aplicación y volvé a abrirla. Si el problema continúa, verificá tu conexión a internet o contactá al soporte técnico."
+      },
+      {
+        "pregunta": "¿Cómo activo el modo oscuro o accesible de la aplicación?",
+        "respuesta": "En el menú de configuración, buscá la opción 'Tema' o 'Accesibilidad' y seleccioná el modo de tu preferencia."
+      },
+      {
+        "pregunta": "¿La aplicación funciona en todos los navegadores?",
+        "respuesta": "Click-Salud está optimizada para navegadores modernos como Chrome, Firefox, Safari y Edge. Podría no funcionar correctamente en navegadores antiguos."
+      }
+    ]
+  },
+  {
+    "categoria": "Citas médicas y turnos",
+    "preguntas": [
+      {
+        "pregunta": "¿Cómo puedo agendar una cita médica desde la app?",
+        "respuesta": "Accedé a la sección 'Citas', seleccioná la especialidad, el centro de salud y el médico disponible, y confirmá la fecha y hora."
+      },
+      {
+        "pregunta": "¿Puedo cancelar o reprogramar una cita?",
+        "respuesta": "Sí, podés cancelar o reprogramar tus citas desde la sección 'Mis Citas' con al menos 24 horas de anticipación."
+      },
+      {
+        "pregunta": "¿Cómo puedo consultar mis citas anteriores o pendientes?",
+        "respuesta": "En la sección 'Mis Citas' encontrarás un listado completo de tus citas pasadas y futuras."
+      },
+      {
+        "pregunta": "¿Qué pasa si no asisto a una cita médica reservada?",
+        "respuesta": "Si no asistís a una cita reservada sin cancelarla con anticipación, podrías recibir una penalización en futuras reservas."
+      },
+      {
+        "pregunta": "¿Puedo solicitar turnos para un familiar desde mi cuenta?",
+        "respuesta": "No, cada usuario debe tener su propia cuenta para gestionar sus citas y datos personales."
+      },
+      {
+        "pregunta": "¿La aplicación me avisa cuando se aproxima la fecha de mi cita?",
+        "respuesta": "Sí, recibirás recordatorios por correo electrónico y notificaciones push 24 horas antes de tu cita."
+      },
+      {
+        "pregunta": "¿Qué especialidades médicas están disponibles en Click-Salud?",
+        "respuesta": "En Click-Salud encontrarás citas disponibles para una amplia variedad de especialidades, incluyendo pediatría, cardiología, ginecología, dermatología y más."
+      },
+      {
+        "pregunta": "¿Puedo elegir el hospital o médico de mi preferencia?",
+        "respuesta": "Sí, al agendar una cita podrás seleccionar el hospital o centro de salud y el médico de tu preferencia, según disponibilidad."
+      }
+    ]
+  },
+  {
+    "categoria": "Resultados y documentos clínicos",
+    "preguntas": [
+      {
+        "pregunta": "¿Cómo accedo a mis resultados de laboratorio o estudios?",
+        "respuesta": "Accedé a la sección 'Resultados' para ver tus informes de laboratorio y estudios clínicos."
+      },
+      {
+        "pregunta": "¿Puedo descargar mis resultados en PDF?",
+        "respuesta": "Sí, podés descargar tus resultados en formato PDF para guardarlos o compartirlos con tu médico."
+      },
+      {
+        "pregunta": "¿Por cuánto tiempo están disponibles mis resultados en la app?",
+        "respuesta": "Tus resultados estarán disponibles en la app por un período de tiempo limitado. Te recomendamos descargarlos para conservarlos."
+      },
+      {
+        "pregunta": "¿Los resultados se actualizan automáticamente cuando el hospital los carga?",
+        "respuesta": "Sí, los resultados se actualizan automáticamente en la app tan pronto como el hospital los cargue."
+      },
+      {
+        "pregunta": "¿Qué hago si un resultado no aparece o está incompleto?",
+        "respuesta": "Contactá al hospital o centro de salud donde te realizaste el estudio para solicitar que carguen o completen tu resultado."
+      }
+    ]
+  },
+  {
+    "categoria": "Perfil y datos personales",
+    "preguntas": [
+      {
+        "pregunta": "¿Cómo cambio mi número de teléfono o correo electrónico registrado?",
+        "respuesta": "Accedé a la sección 'Mi Perfil' y editá la información que desees modificar. Recordá guardar los cambios."
+      },
+      {
+        "pregunta": "¿Puedo vincular mi número de documento o historia clínica a mi cuenta?",
+        "respuesta": "Sí, podés vincular tu número de documento o historia clínica a tu cuenta en la sección 'Mi Perfil'."
+      },
+      {
+        "pregunta": "¿Mis datos personales están protegidos según la ley paraguaya de protección de datos?",
+        "respuesta": "Sí, Click-Salud cumple con la ley paraguaya de protección de datos personales y utiliza medidas de seguridad para proteger tu información."
+      },
+      {
+        "pregunta": "¿Puedo eliminar mi cuenta de Click-Salud si ya no quiero usarla?",
+        "respuesta": "Sí, podés eliminar tu cuenta de Click-Salud contactando al soporte técnico."
+      },
+      {
+        "pregunta": "¿Cómo verifico que mi información sea visible solo para mí o para mi médico?",
+        "respuesta": "En la sección 'Mi Perfil' podés configurar la visibilidad de tu información personal."
+      }
+    ]
+  },
+  {
+    "categoria": "Seguridad, privacidad y soporte técnico",
+    "preguntas": [
+      {
+        "pregunta": "¿Qué medidas de seguridad utiliza Click-Salud para proteger mi información?",
+        "respuesta": "Click-Salud utiliza encriptación de datos, autenticación de dos factores y otras medidas de seguridad para proteger tu información."
+      },
+      {
+        "pregunta": "¿Dónde puedo contactar al equipo de soporte si tengo problemas técnicos?",
+        "respuesta": "Podés contactar al equipo de soporte a través del formulario de contacto en la sección 'Soporte' o enviando un correo electrónico a soporte@clicksalud.gov.py."
+      }
+    ]
+  }
+]

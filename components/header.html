@@ -1,0 +1,64 @@
+<!-- Componente: Encabezado Fijo -->
+<header class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-50">
+  <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+
+    <!-- Logo y Título -->
+    <a href="#dashboard" class="flex items-center space-x-3">
+      <img src="assets/img/clicksaludLogo.png" alt="Logo Click-Salud" class="h-10 w-10">
+      <h1 class="text-xl font-bold text-blue-600 dark:text-blue-400">Click-Salud</h1>
+    </a>
+
+    <!-- Controles del Usuario -->
+    <div class="flex items-center space-x-4">
+      <!-- Botón de cambio de tema -->
+      <button id="theme-toggle"
+        class="relative text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 p-2 rounded-full transition-colors"
+        aria-label="Cambiar tema">
+        <span id="theme-icon" class="material-symbols-outlined text-2xl">light_mode</span>
+      </button>
+
+      <!-- Botón de notificaciones -->
+      <button class="relative text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
+        <span class="material-symbols-outlined">notifications</span>
+        <span
+          class="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white dark:ring-gray-800"></span>
+      </button>
+
+      <!-- Avatar del usuario -->
+      <div class="relative">
+        <button id="user-menu-toggle"
+          class="flex items-center focus:outline-none border-2 border-transparent rounded-full hover:border-blue-500 transition">
+          <img src="https://randomuser.me/api/portraits/women/75.jpg" alt="Avatar de Usuario"
+            class="h-10 w-10 rounded-full">
+        </button>
+
+        <!-- Menú desplegable de usuario -->
+        <div id="user-menu"
+          class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg z-50">
+          <a href="#perfil"
+            class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Perfil</a>
+          <a href="#configuracion"
+            class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Configuración</a>
+          <hr class="border-gray-200 dark:border-gray-700">
+          <a href="#logout"
+            class="block px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700">Cerrar sesión</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  // --- Control del menú de usuario ---
+  document.addEventListener('click', (e) => {
+    const toggle = document.getElementById('user-menu-toggle');
+    const menu = document.getElementById('user-menu');
+    if (!toggle || !menu) return;
+
+    if (toggle.contains(e.target)) {
+      menu.classList.toggle('hidden');
+    } else if (!menu.contains(e.target)) {
+      menu.classList.add('hidden');
+    }
+  });
+</script>

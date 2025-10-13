@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "tipo": "Análisis de Sangre",
+    "fecha": "2025-04-20",
+    "estado": "disponible",
+    "url_pdf": "#"
+  },
+  {
+    "id": 2,
+    "tipo": "Radiografía de Tórax",
+    "fecha": "2025-03-15",
+    "estado": "disponible",
+    "url_pdf": "#"
+  },
+  {
+    "id": 3,
+    "tipo": "Perfil Lipídico",
+    "fecha": "2025-05-05",
+    "estado": "pendiente",
+    "url_pdf": null
+  }
+]
