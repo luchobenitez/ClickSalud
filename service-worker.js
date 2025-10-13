@@ -6,6 +6,7 @@ const CACHE_NAME = 'click-salud-cache-v3';
 const urlsToCache = [
   './',
   './index.html',
+  './offline.html',
   './manifest.json',
   './assets/css/styles.css',
   './assets/js/app.js',
@@ -76,46 +77,41 @@ self.addEventListener('activate', event => {
 });
 
 /* ==========================================================================
-   INTERCEPTAR PETICIONES (FETCH)
+   INTERCEPTAR PETICIONES (FETCH) CON FALLBACK OFFLINE
    ========================================================================== */
 self.addEventListener('fetch', event => {
   const request = event.request;
 
-  // ⚠️ Ignorar esquemas no válidos (chrome-extension:, data:, file:, etc.)
-  if (!request.url.startsWith('http')) {
-    return;
-  }
+  // Ignorar esquemas no válidos (chrome-extension:, data:, file:, etc.)
+  if (!request.url.startsWith('http')) return;
 
-  // ⚠️ Evitar cachear el propio service worker
+  // Evitar interceptar el propio SW
   if (request.url.includes('service-worker.js')) return;
 
   event.respondWith(
-    caches.match(request)
-      .then(response => {
-        // ✅ Devuelve desde caché si existe
-        if (response) return response;
+    caches.match(request).then(response => {
+      if (response) return response; // Devuelve desde caché si existe
 
-        // 🚀 Si no está cacheado, intenta obtener de la red
-        return fetch(request)
-          .then(networkResponse => {
-            // ⚠️ Cachear solo respuestas válidas y del mismo origen
-            if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
-              return networkResponse;
-            }
-
-            // Guardar copia en caché
-            const responseToCache = networkResponse.clone();
-            caches.open(CACHE_NAME)
-              .then(cache => cache.put(request, responseToCache))
-              .catch(err => console.warn('[ServiceWorker] Error al guardar en caché:', err));
-
+      return fetch(request)
+        .then(networkResponse => {
+          if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
             return networkResponse;
-          })
-          .catch(err => {
-            console.warn(`[ServiceWorker] Falló la red para ${request.url}:`, err);
-            // TODO: Podrías devolver aquí una página "offline.html" si la tienes cacheada
-          });
-      })
-      .catch(err => console.error('[ServiceWorker] Error general en fetch:', err))
+          }
+
+          const responseToCache = networkResponse.clone();
+          caches.open(CACHE_NAME)
+            .then(cache => cache.put(request, responseToCache))
+            .catch(err => console.warn('[ServiceWorker] Error al guardar en caché:', err));
+
+          return networkResponse;
+        })
+        .catch(async err => {
+          console.warn(`[ServiceWorker] Falló la red para ${request.url}:`, err);
+          // Mostrar página offline si la red falla y no hay caché
+          const cache = await caches.open(CACHE_NAME);
+          const offlinePage = await cache.match('./offline.html');
+          return offlinePage || new Response('<h1>Offline</h1>', { headers: { 'Content-Type': 'text/html' } });
+        });
+    })
   );
 });
