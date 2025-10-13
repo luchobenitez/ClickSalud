@@ -10,7 +10,6 @@ const urlsToCache = [
   './assets/css/styles.css',
   './assets/js/app.js',
   './assets/js/medicos.js',
-  './assets/js/tailwind.js',
   './assets/js/theme.js',
   './assets/img/clicksaludLogo.png',
   'https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap',
@@ -24,18 +23,33 @@ const urlsToCache = [
 ];
 
 /* ==========================================================================
-   INSTALACIÓN
+   INSTALACIÓN (segura)
    ========================================================================== */
 self.addEventListener('install', event => {
   console.log('[ServiceWorker] Instalando y cacheando recursos...');
+
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => {
-        console.log('[ServiceWorker] Cache abierto correctamente.');
-        return cache.addAll(urlsToCache);
-      })
-      .then(() => self.skipWaiting())
-      .catch(err => console.error('[ServiceWorker] Error al cachear:', err))
+    (async () => {
+      const cache = await caches.open(CACHE_NAME);
+      console.log('[ServiceWorker] Cache abierto correctamente.');
+
+      // Intentar agregar cada recurso de forma individual
+      for (const url of urlsToCache) {
+        try {
+          const response = await fetch(url, { mode: 'no-cors' });
+          if (response.ok || response.type === 'opaque') {
+            await cache.put(url, response);
+            console.log(`✅ Cacheado: ${url}`);
+          } else {
+            console.warn(`⚠️ No se pudo cachear (status ${response.status}): ${url}`);
+          }
+        } catch (err) {
+          console.warn(`⚠️ Error al cachear ${url}:`, err);
+        }
+      }
+
+      self.skipWaiting();
+    })()
   );
 });
 

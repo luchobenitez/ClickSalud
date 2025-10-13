@@ -10,18 +10,25 @@
 
 export async function obtenerMedicos() {
   try {
-    const response = await fetch('assets/data/medicos.json');
+    // Detectar contexto de ejecución (local o GitHub Pages)
+    const basePath = location.hostname.includes('github.io')
+      ? '/ClickSalud/'
+      : './';
+
+    const response = await fetch(`${basePath}assets/data/medicos.json`, { cache: 'no-store' });
+
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const data = await response.json();
 
-    console.log(`✅ ${data.length} médicos cargados desde medicos.json`);
+    console.log(`✅ ${data.length} médicos cargados desde ${basePath}assets/data/medicos.json`);
     return data;
   } catch (error) {
-    mostrarMensajeError(`❌ Error al obtener médicos: ${error.message}`);
     console.error('❌ Error al obtener médicos:', error);
+    mostrarMensajeError('Error al cargar datos de médicos. Verifique la conexión o el archivo.');
     return [];
   }
 }
+
 
 export function filtrarMedicos(medicos, filtros = {}) {
   return medicos.filter(m =>
