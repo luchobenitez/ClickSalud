@@ -2,10 +2,10 @@
  * =====================================================================
  * Click-Salud | directorio.js
  * ---------------------------------------------------------------------
- * Manejo de la página de Directorio Médico:
- *  - Carga de médicos desde medicos.json
- *  - Filtros dinámicos por especialidad, ciudad, profesional y centro
- *  - Renderizado del listado filtrado
+ * Página: Directorio Médico
+ * - Carga los datos desde medicos.json
+ * - Filtro por especialidad y ciudad
+ * - Renderiza automáticamente todos los resultados coincidentes
  * =====================================================================
  */
 
@@ -14,48 +14,29 @@ import { obtenerMedicos, filtrarMedicos, renderMedicos } from './medicos.js';
 export async function initDirectorio() {
   console.log("📋 Inicializando página de Directorio...");
 
-  let medicos = [];
-
   try {
-    medicos = await obtenerMedicos();
+    const medicos = await obtenerMedicos();
 
+    // Llenar los selectores iniciales
     llenarSelect('filtro-especialidad', [...new Set(medicos.map(m => m.especialidad))]);
     llenarSelect('filtro-ciudad', [...new Set(medicos.map(m => m.ciudad))]);
 
-    // Eventos de filtro en cascada
+    // Evento: cambio en Especialidad
     document.getElementById('filtro-especialidad').addEventListener('change', e => {
       const esp = e.target.value;
-      const filtrados = medicos.filter(m => m.especialidad === esp);
-      llenarSelect('filtro-ciudad', [...new Set(filtrados.map(m => m.ciudad))]);
-      llenarSelect('filtro-profesional', [...new Set(filtrados.map(m => m.nombre))]);
-      llenarSelect('filtro-centro', []);
+      const filtrados = filtrar(medicos, esp, document.getElementById('filtro-ciudad').value);
+      renderMedicos(filtrados, 'resultados-directorio');
     });
 
+    // Evento: cambio en Ciudad
     document.getElementById('filtro-ciudad').addEventListener('change', e => {
-      const esp = document.getElementById('filtro-especialidad').value;
-      const ciudad = e.target.value;
-      const filtrados = medicos.filter(m => m.especialidad === esp && m.ciudad === ciudad);
-      llenarSelect('filtro-profesional', [...new Set(filtrados.map(m => m.nombre))]);
-      llenarSelect('filtro-centro', [...new Set(filtrados.map(m => m.centro))]);
+      const ciu = e.target.value;
+      const filtrados = filtrar(medicos, document.getElementById('filtro-especialidad').value, ciu);
+      renderMedicos(filtrados, 'resultados-directorio');
     });
 
-    document.getElementById('filtro-profesional').addEventListener('change', e => {
-      const profesional = e.target.value;
-      const filtrados = medicos.filter(m => m.nombre === profesional);
-      llenarSelect('filtro-centro', [...new Set(filtrados.map(m => m.centro))]);
-    });
-
-    document.getElementById('form-directorio').addEventListener('submit', e => {
-      e.preventDefault();
-      const filtros = {
-        especialidad: document.getElementById('filtro-especialidad').value,
-        ciudad: document.getElementById('filtro-ciudad').value,
-        profesional: document.getElementById('filtro-profesional').value,
-        centro: document.getElementById('filtro-centro').value,
-      };
-      const resultados = filtrarMedicos(medicos, filtros);
-      renderMedicos(resultados, 'resultados-directorio');
-    });
+    // Mostrar todos los médicos al inicio
+    renderMedicos(medicos, 'resultados-directorio');
 
   } catch (error) {
     console.error("❌ Error al inicializar directorio:", error);
@@ -64,8 +45,21 @@ export async function initDirectorio() {
   }
 }
 
+/**
+ * Llenar un <select> con opciones únicas
+ */
 function llenarSelect(id, opciones) {
   const sel = document.getElementById(id);
   sel.innerHTML = '<option value="">Seleccionar</option>';
   opciones.forEach(o => sel.innerHTML += `<option value="${o}">${o}</option>`);
+}
+
+/**
+ * Filtrar médicos según especialidad y ciudad
+ */
+function filtrar(medicos, especialidad, ciudad) {
+  return medicos.filter(m =>
+    (!especialidad || m.especialidad === especialidad) &&
+    (!ciudad || m.ciudad === ciudad)
+  );
 }

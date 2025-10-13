@@ -63,9 +63,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 import(`${basePath}assets/js/directorio.js`)
                     .then(module => {
                         if (typeof module.initDirectorio === 'function') {
-                        module.initDirectorio();
+                            module.initDirectorio();
                         } else {
-                        console.warn('⚠️ initDirectorio() no encontrada en directorio.js');
+                            console.warn('⚠️ initDirectorio() no encontrada en directorio.js');
                         }
                     })
                     .catch(err => console.error('Error al inicializar Directorio:', err));
