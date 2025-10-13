@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const basePath = location.hostname.includes('github.io')
             ? '/ClickSalud/'
             : './';
-        if (hash === 'historia') hash = 'historia-clinica';
+        // if (hash === 'historia') hash = 'historia-clinica';
         switch (hash) {
             case 'directorio':
                 import(`${basePath}assets/js/directorio.js`)
@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // lógica futura
             break;
         
-            case 'historia-clinica':
+            case 'historia':
                 await loadPage('historia-clinica');
                 import(`${basePath}assets/js/historia-clinica.js`)
                 .then(module => module.initHistoriaClinica())
