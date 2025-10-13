@@ -53,14 +53,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const router = async () => {
         const hash = window.location.hash.substring(1) || 'dashboard';
         await loadPage(hash);
-        
+
+         // Detectar contexto de ejecución (local o GitHub Pages)
+        const basePath = location.hostname.includes('github.io')
+            ? '/ClickSalud/'
+            : './';
         switch (hash) {
             case 'directorio':
             initDirectorioPage();
             break;
         
             case 'citas':
-            import('./assets/js/medicos.js')
+            import('${basePath}assets/js/medicos.js')
                 .then(module => module.initCitas())
                 .catch(err => console.error('Error al inicializar citas:', err));
             break;
