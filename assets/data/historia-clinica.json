@@ -1,0 +1,84 @@
+{
+  "ficha_id": "HC-2025-45321",
+  "paciente": {
+    "nombres": "Elena Beatriz",
+    "apellidos": "Gómez Pereira",
+    "fecha_nacimiento": "1958-05-15",
+    "edad": 67,
+    "sexo": "Femenino",
+    "cedula_identidad": "1.234.567",
+    "ocupacion": "Jubilada (Ex-Docente)",
+    "estado_civil": "Viuda",
+    "contacto_emergencia": {
+      "nombre": "Ricardo Gómez",
+      "parentesco": "Hijo",
+      "telefono": "+595 981 777-123"
+    }
+  },
+  "diagnostico_principal": {
+    "cie10": "I50.4",
+    "descripcion": "Insuficiencia Cardíaca Crónica Descompensada (Clase funcional NYHA III)",
+    "secundarios": [
+      { "cie10": "I11.0", "descripcion": "Cardiopatía Hipertensiva con Insuficiencia Cardíaca" },
+      { "cie10": "E11.9", "descripcion": "Diabetes Mellitus Tipo 2 no insulinodependiente" },
+      { "cie10": "I48.0", "descripcion": "Fibrilación Auricular Paroxística" },
+      { "cie10": "J44.9", "descripcion": "Enfermedad Pulmonar Obstructiva Crónica (EPOC), leve" }
+    ]
+  },
+  "antecedentes": {
+    "personales": {
+      "hta": "Desde hace 25 años, mal controlada intermitentemente.",
+      "dm2": "Desde hace 15 años. Control glicémico irregular (HbA1c reciente: 8.5%).",
+      "quirurgicos": "Colecistectomía (2005).",
+      "alergias": "Penicilina (rash cutáneo).",
+      "habitos_toxicos": {
+        "tabaco": "Fumadora activa de 5 paquetes/año, suspendido hace 10 años.",
+        "alcohol": "Ocasional, social."
+      }
+    },
+    "familiares": {
+      "padre": "Fallecido a los 72 años por Infarto Agudo de Miocardio (IAM).",
+      "madre": "Vive, 89 años. Hipertensión y Osteoporosis.",
+      "hermanos": "Uno con Hipertensión Arterial (HTA)."
+    }
+  },
+  "episodio_actual": {
+    "fecha_ingreso": "2025-10-10",
+    "motivo_consulta": "Disnea de esfuerzo progresiva que ha empeorado en las últimas 72 horas, ortopnea y edemas maleolares bilaterales.",
+    "examen_fisico": {
+      "ta": "145/88 mmHg",
+      "fc": "110 lpm (irregular)",
+      "fr": "24 rpm",
+      "sat_o2": "90% (aire ambiente)",
+      "general": "Paciente despierta, orientada. Disneica en reposo. Edema +++/++++ en miembros inferiores hasta rodillas. Ingurgitación yugular +.",
+      "cardiovascular": "Ruidos rítmicos irregulares (sospecha de FA). Soplo sistólico 2/6 en foco mitral (antiguo, por insuficiencia mitral leve).",
+      "respiratorio": "Crepitantes bibasales hasta campos medios (compatible con edema pulmonar)."
+    }
+  },
+  "laboratorio_e_imagenes": {
+    "fecha_informe": "2025-10-11",
+    "resultados_clave": {
+      "bnp": "Alto: 1540 pg/ml (Indicativo de IC descompensada)",
+      "creatinina": "1.3 mg/dl (Leve deterioro renal)",
+      "glucosa": "210 mg/dl (Hiperglicemia aguda)",
+      "ecg": "Fibrilación Auricular con respuesta ventricular rápida.",
+      "rx_torax": "Cardiomegalia severa. Redistribución del flujo pulmonar. Derrame pleural bilateral leve.",
+      "ecocardiograma_previo": "FEVI: 35% (Fracción de Eyección Ventricular Izquierda). Insuficiencia Mitral leve. Hipertrofia Ventricular Izquierda concéntrica."
+    }
+  },
+  "plan_manejo_cronologico": [
+    {
+      "fecha": "2025-10-10 (Urgencias)",
+      "accion": "Ingreso a Unidad Coronaria. Oxigenoterapia por máscara. Diuréticos IV (Furosemida 40mg IV). Bolo de Heparina de bajo peso molecular."
+    },
+    {
+      "fecha": "2025-10-11",
+      "accion": "Inicio de control de frecuencia cardíaca con Beta Bloqueante (Bisoprolol 2.5mg VO). Ajuste de dosis de Furosemida (80mg IV cada 12h). Monitoreo estricto de diuresis y electrolitos."
+    },
+    {
+      "fecha": "2025-10-12",
+      "accion": "Mejoría clínica leve. Disnea disminuye a esfuerzo mínimo. Se inicia IECA (Enalapril 5mg VO) y se mantiene anticoagulación. Interconsulta a Nutrición por manejo de DM2 e IRC."
+    }
+  ],
+  "pronostico": "Reservado a tórpido debido a la baja FEVI, cronicidad de la IC y comorbilidades (DM2, FA, IRC). Se espera estabilización para planificar el alta con manejo domiciliario intensivo."
+}

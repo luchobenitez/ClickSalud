@@ -107,8 +107,10 @@ document.addEventListener('DOMContentLoaded', () => {
             break;
         
             case 'historia-clinica':
-            // lógica futura
-            break;
+                import(`${basePath}assets/js/historia-clinica.js`)
+                .then(module => module.initHistoriaClinica())
+                .catch(err => console.error('Error al cargar historia clínica:', err));
+                break;
         }
     };
 
