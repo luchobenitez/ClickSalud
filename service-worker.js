@@ -3,16 +3,24 @@
 
 const CACHE_NAME = 'click-salud-cache-v1';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/assets/css/styles.css',
-  '/assets/js/app.js',
-  '/assets/img/clicksaludLogo.png',
+  './',
+  './index.html',
+  './manifest.json',
+  './service-worker.js',
+  './assets/css/styles.css',
+  './assets/js/app.js',
+  './assets/js/medicos.js',
+  './assets/js/tailwind.js',
+  './assets/js/theme.js',
+  './assets/img/clicksaludLogo.png',
   'https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap',
   'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200',
-  '/assets/data/medicos.json',
-  '/assets/data/faqs.json'
+  './assets/data/beneficios.json',
+  './assets/data/centros.json',
+  './assets/data/faqs.json',
+  './assets/data/medicos.json',
+  './assets/data/recordatorios.json',
+  './assets/data/resultados.json'
 ];
 
 // Evento de instalación: se abre el caché y se añaden los archivos base.
