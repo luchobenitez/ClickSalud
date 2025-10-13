@@ -1,8 +1,8 @@
 // @ts-check
 // MIME: application/javascript
-// Click-Salud Service Worker - Versión optimizada para GitHub Pages
+// Click-Salud Service Worker - Versión estable y segura para GitHub Pages
 
-const CACHE_NAME = 'click-salud-cache-v2';
+const CACHE_NAME = 'click-salud-cache-v3';
 const urlsToCache = [
   './',
   './index.html',
@@ -30,7 +30,10 @@ self.addEventListener('install', event => {
   console.log('[ServiceWorker] Instalando y cacheando recursos...');
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(urlsToCache))
+      .then(cache => {
+        console.log('[ServiceWorker] Cache abierto correctamente.');
+        return cache.addAll(urlsToCache);
+      })
       .then(() => self.skipWaiting())
       .catch(err => console.error('[ServiceWorker] Error al cachear:', err))
   );
@@ -43,16 +46,18 @@ self.addEventListener('activate', event => {
   console.log('[ServiceWorker] Activando y limpiando versiones antiguas...');
   const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
-    caches.keys().then(cacheNames =>
-      Promise.all(
-        cacheNames.map(cacheName => {
-          if (!cacheWhitelist.includes(cacheName)) {
-            console.log(`[ServiceWorker] Eliminando caché antigua: ${cacheName}`);
-            return caches.delete(cacheName);
-          }
-        })
+    caches.keys()
+      .then(cacheNames =>
+        Promise.all(
+          cacheNames.map(cacheName => {
+            if (!cacheWhitelist.includes(cacheName)) {
+              console.log(`[ServiceWorker] Eliminando caché antigua: ${cacheName}`);
+              return caches.delete(cacheName);
+            }
+          })
+        )
       )
-    ).then(() => self.clients.claim())
+      .then(() => self.clients.claim())
   );
 });
 
@@ -60,28 +65,43 @@ self.addEventListener('activate', event => {
    INTERCEPTAR PETICIONES (FETCH)
    ========================================================================== */
 self.addEventListener('fetch', event => {
-  // Evitar cachear llamadas al propio SW o peticiones externas que fallen CORS
-  if (event.request.url.includes('service-worker.js')) return;
+  const request = event.request;
+
+  // ⚠️ Ignorar esquemas no válidos (chrome-extension:, data:, file:, etc.)
+  if (!request.url.startsWith('http')) {
+    return;
+  }
+
+  // ⚠️ Evitar cachear el propio service worker
+  if (request.url.includes('service-worker.js')) return;
 
   event.respondWith(
-    caches.match(event.request).then(response => {
-      // Retorna desde caché si existe
-      if (response) return response;
+    caches.match(request)
+      .then(response => {
+        // ✅ Devuelve desde caché si existe
+        if (response) return response;
 
-      // Si no está cacheado, intenta buscarlo en la red
-      return fetch(event.request)
-        .then(networkResponse => {
-          // Cachear dinámicamente solo si es una respuesta válida (status 200)
-          if (!networkResponse || networkResponse.status !== 200) return networkResponse;
+        // 🚀 Si no está cacheado, intenta obtener de la red
+        return fetch(request)
+          .then(networkResponse => {
+            // ⚠️ Cachear solo respuestas válidas y del mismo origen
+            if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
+              return networkResponse;
+            }
 
-          const responseClone = networkResponse.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(event.request, responseClone));
-          return networkResponse;
-        })
-        .catch(err => {
-          console.warn('[ServiceWorker] Falló la red:', err);
-          // Aquí podrías devolver una página offline personalizada si quisieras
-        });
-    })
+            // Guardar copia en caché
+            const responseToCache = networkResponse.clone();
+            caches.open(CACHE_NAME)
+              .then(cache => cache.put(request, responseToCache))
+              .catch(err => console.warn('[ServiceWorker] Error al guardar en caché:', err));
+
+            return networkResponse;
+          })
+          .catch(err => {
+            console.warn(`[ServiceWorker] Falló la red para ${request.url}:`, err);
+            // TODO: Podrías devolver aquí una página "offline.html" si la tienes cacheada
+          });
+      })
+      .catch(err => console.error('[ServiceWorker] Error general en fetch:', err))
   );
 });
