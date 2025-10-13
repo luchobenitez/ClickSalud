@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                    })
                     .catch(err => console.error('Error al inicializar recordatorios:', err));
-                eak;
+                break;
 
             case 'citas':
                 import(`${basePath}assets/js/medicos.js`)
