@@ -69,7 +69,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     .then(module => module.initCitas())
                     .catch(err => console.error('Error al inicializar citas:', err));
             break;
-        
+
+            case 'centros':
+                import(`${basePath}assets/js/centros.js`)
+                    .then(module => {
+                        if (typeof module.initCentros === 'function') {
+                            module.initCentros();
+                        } else {
+                            console.warn('⚠️ initCentros() no encontrada en centros.js');
+                        }
+                    })
+                    .catch(err => console.error('Error al inicializar Centros:', err));
+                break;
+       
             case 'soporte':
             // lógica futura
             break;

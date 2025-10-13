@@ -1,63 +1,36 @@
-<!-- Página: Centros de Salud -->
-<section class="flex flex-col md:flex-row h-full">
+<section id="page-centros" class="flex flex-col md:flex-row h-[calc(100vh-10rem)] overflow-hidden">
 
-  <!-- Panel lateral -->
-  <aside class="w-full md:max-w-md lg:max-w-lg flex flex-col border-r border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+    <!-- Panel lateral -->
+    <aside
+        class="w-full md:max-w-md lg:max-w-lg flex flex-col border-r border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+        <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+            <h2 class="text-2xl font-bold mb-4">Centros de Salud</h2>
 
-    <!-- Controles de búsqueda y filtro -->
-    <div class="p-4 border-b border-gray-200 dark:border-gray-700">
-      <h2 class="text-2xl font-bold mb-4">Centros de Salud</h2>
+            <div class="relative">
+                <span
+                    class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
+                <input id="search-centros" type="text"
+                    class="w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg py-2 pl-10 pr-4 focus:ring-2 focus:ring-blue-500"
+                    placeholder="Buscar centro de salud...">
+            </div>
 
-      <!-- Barra de búsqueda -->
-      <div class="relative">
-        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
-        <input
-          id="search-centros"
-          type="text"
-          class="w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg py-2 pl-10 pr-4 focus:ring-2 focus:ring-blue-500"
-          placeholder="Buscar centro de salud..."
-        >
-      </div>
+            <div class="flex items-center justify-between mt-4">
+                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Solo abiertos ahora</span>
+                <label for="toggle-abiertos" class="flex items-center cursor-pointer">
+                    <div class="relative">
+                        <input type="checkbox" id="toggle-abiertos" class="sr-only">
+                        <div class="block bg-gray-300 dark:bg-gray-600 w-12 h-6 rounded-full"></div>
+                        <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform"></div>
+                    </div>
+                </label>
+            </div>
+        </div>
 
-      <!-- Filtro de disponibilidad -->
-      <div class="flex items-center justify-between mt-4">
-        <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Solo abiertos ahora</span>
-        <label for="toggle-abiertos" class="flex items-center cursor-pointer">
-          <div class="relative">
-            <input type="checkbox" id="toggle-abiertos" class="sr-only">
-            <div class="block bg-gray-300 dark:bg-gray-600 w-12 h-6 rounded-full"></div>
-            <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform"></div>
-          </div>
-        </label>
-      </div>
-    </div>
+        <div id="lista-centros" class="flex-1 overflow-y-auto p-4 space-y-4"></div>
+    </aside>
 
-    <!-- Listado -->
-    <div id="lista-centros" class="flex-1 overflow-y-auto p-4 space-y-4"></div>
-  </aside>
-
-  <!-- Mapa principal -->
-  <main class="flex-1 relative">
-    <div id="map" class="w-full h-full"></div>
-  </main>
-
+    <!-- Mapa -->
+    <main class="flex-1 relative bg-gray-100 dark:bg-gray-900">
+        <div id="map" class="w-full h-full min-h-[400px]"></div>
+    </main>
 </section>
-
-<!-- Estilos locales -->
-<style>
-  #toggle-abiertos:checked ~ .block {
-    background-color: #11d4d4;
-  }
-
-  #toggle-abiertos:checked ~ .dot {
-    transform: translateX(1.5rem);
-  }
-
-  #map {
-    width: 100%;
-    height: 100%;
-  }
-</style>
-
-<!-- Script específico de la página -->
-<script type="module" src="assets/js/centros.js"></script>
