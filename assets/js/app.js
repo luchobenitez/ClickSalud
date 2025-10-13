@@ -6,7 +6,7 @@
  *  - Carga dinámica de componentes (header, footer, nav)
  *  - Router hash simple
  *  - Gestión del tema claro/oscuro
- *  - Registro del Service Worker (ajustado para GitHub Pages)
+ *  - Registro del Service Worker (rutas relativas para GitHub Pages)
  *  - Inicialización de páginas específicas
  * ==========================================================================
  */
@@ -17,13 +17,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const mainFooter = document.getElementById('main-footer');
     const mainNav = document.getElementById('main-nav');
 
-    /**
-     * Carga un componente HTML desde /components y lo inyecta en un contenedor destino.
-     * @param {string} component - Nombre del archivo, ej: 'header.html'
-     * @param {HTMLElement} element - Elemento destino donde se inyectará el HTML.
-     */
     const loadComponent = async (component, element) => {
         try {
+            if (!element) {
+                console.warn(`[Aviso] Contenedor destino no encontrado para ${component}`);
+                return;
+            }
             const response = await fetch(`components/${component}`);
             if (!response.ok) throw new Error(`No se pudo cargar ${component}`);
             element.innerHTML = await response.text();
@@ -33,15 +32,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    /**
-     * Carga una página desde /pages y la inyecta en el contenedor principal.
-     * @param {string} page - Nombre base de la página (ej: 'dashboard')
-     */
     const loadPage = async (page) => {
         try {
             const response = await fetch(`pages/${page}.html`);
             if (!response.ok) {
-                appContent.innerHTML = `<p class="text-center text-gray-500">Página no encontrada.</p>`;
+                console.warn(`⚠️ Página "${page}" no encontrada. Redirigiendo al dashboard.`);
+                window.location.hash = 'dashboard';
                 return;
             }
             appContent.innerHTML = await response.text();
@@ -51,164 +47,106 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    /**
-     * Router basado en el hash (#ruta)
-     * Ejemplo: #directorio → carga pages/directorio.html
-     */
     const router = async () => {
         const hash = window.location.hash.substring(1) || 'dashboard';
         await loadPage(hash);
-
-        switch (hash) {
-            case 'directorio':
-                initDirectorioPage();
-                break;
-            case 'soporte':
-                // lógica futura
-                break;
-            case 'historia-clinica':
-                // lógica futura
-                break;
-        }
+        if (hash === 'directorio') initDirectorioPage();
     };
 
-    /**
-     * Inicializa la aplicación principal.
-     */
     const initApp = async () => {
         console.log('🚀 Inicializando Click-Salud...');
-
-        // 1️⃣ Cargar el header (necesario para el interruptor de tema)
         await loadComponent('header.html', mainHeader);
-
-        // 2️⃣ Inicializar tema claro/oscuro
         initThemeToggle();
-
-        // 3️⃣ Cargar footer y navegación móvil en paralelo
         await Promise.all([
             loadComponent('footer.html', mainFooter),
             loadComponent('nav-mobile.html', mainNav)
         ]);
-
-        // 4️⃣ Activar router
         window.addEventListener('hashchange', router);
         router();
-
-        // 5️⃣ Registrar Service Worker (rutas relativas para GitHub Pages)
         registerServiceWorker();
     };
 
-    /**
-     * Gestión del tema oscuro/claro con persistencia en localStorage.
-     */
     const initThemeToggle = () => {
-        const themeToggle = document.getElementById('theme-toggle');
-        const themeIcon = document.getElementById('theme-icon');
-
-        if (!themeToggle || !themeIcon) {
-            console.warn('⚠️ Botón de tema no encontrado');
-            return;
-        }
+        const toggle = document.getElementById('theme-toggle');
+        const icon = document.getElementById('theme-icon');
+        if (!toggle || !icon) return;
 
         const userTheme = localStorage.getItem('theme');
-        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
+        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         const applyTheme = (theme) => {
-            if (theme === 'dark') {
-                document.documentElement.classList.add('dark');
-                themeIcon.textContent = 'dark_mode';
-            } else {
-                document.documentElement.classList.remove('dark');
-                themeIcon.textContent = 'light_mode';
-            }
+            document.documentElement.classList.toggle('dark', theme === 'dark');
+            icon.textContent = theme === 'dark' ? 'dark_mode' : 'light_mode';
         };
 
-        // Tema inicial
-        applyTheme(userTheme || (systemPrefersDark ? 'dark' : 'light'));
-
-        // Listener de botón
-        themeToggle.addEventListener('click', () => {
+        applyTheme(userTheme || (systemDark ? 'dark' : 'light'));
+        toggle.addEventListener('click', () => {
             const isDark = document.documentElement.classList.toggle('dark');
-            const newTheme = isDark ? 'dark' : 'light';
-            localStorage.setItem('theme', newTheme);
-            themeIcon.textContent = isDark ? 'dark_mode' : 'light_mode';
+            const theme = isDark ? 'dark' : 'light';
+            localStorage.setItem('theme', theme);
+            icon.textContent = isDark ? 'dark_mode' : 'light_mode';
         });
-
-        console.log('✅ Cambio de tema inicializado');
     };
 
-    /**
-     * Inicializa la página del Directorio Médico.
-     */
+    let medicosCache = null;
     const initDirectorioPage = async () => {
-        const listaDirectorio = document.getElementById('directorio-lista');
-        const filtroEspecialidad = document.getElementById('filtro-especialidad');
-        const filtroCiudad = document.getElementById('filtro-ciudad');
-
-        if (!listaDirectorio) return;
+        const lista = document.getElementById('directorio-lista');
+        const espSel = document.getElementById('filtro-especialidad');
+        const ciuSel = document.getElementById('filtro-ciudad');
+        if (!lista) return;
 
         try {
-            const response = await fetch('assets/data/medicos.json');
-            const medicos = await response.json();
-
+            if (!medicosCache) {
+                const res = await fetch('assets/data/medicos.json');
+                medicosCache = await res.json();
+            }
+            const medicos = medicosCache;
             const especialidades = [...new Set(medicos.map(m => m.especialidad))];
             const ciudades = [...new Set(medicos.map(m => m.ciudad))];
+            especialidades.forEach(e => espSel.add(new Option(e, e)));
+            ciudades.forEach(c => ciuSel.add(new Option(c, c)));
 
-            // Cargar opciones
-            especialidades.forEach(e => filtroEspecialidad.add(new Option(e, e)));
-            ciudades.forEach(c => filtroCiudad.add(new Option(c, c)));
-
-            const renderMedicos = (lista) => {
-                listaDirectorio.innerHTML = lista.length
-                    ? lista.map(medico => `
+            const render = (listaM) => {
+                lista.innerHTML = listaM.length
+                    ? listaM.map(m => `
                         <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow flex items-center space-x-4">
-                            <img src="${medico.foto}" alt="${medico.nombre}" class="h-16 w-16 rounded-full">
+                            <img src="${m.foto}" alt="${m.nombre}" class="h-16 w-16 rounded-full">
                             <div>
-                                <h3 class="font-bold">${medico.nombre}</h3>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">${medico.especialidad}</p>
-                                <p class="text-sm text-gray-500 dark:text-gray-300">${medico.ciudad}</p>
+                                <h3 class="font-bold">${m.nombre}</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">${m.especialidad}</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-300">${m.ciudad}</p>
                             </div>
                         </div>
                     `).join('')
-                    : '<p class="text-gray-500 text-center">No se encontraron médicos con los filtros seleccionados.</p>';
+                    : '<p class="text-gray-500 text-center">No se encontraron médicos.</p>';
             };
 
-            const filtrarMedicos = () => {
-                const especialidad = filtroEspecialidad.value;
-                const ciudad = filtroCiudad.value;
-                renderMedicos(
-                    medicos.filter(m =>
-                        (!especialidad || m.especialidad === especialidad) &&
-                        (!ciudad || m.ciudad === ciudad)
-                    )
-                );
+            const filtrar = () => {
+                const esp = espSel.value;
+                const ciu = ciuSel.value;
+                render(medicos.filter(m =>
+                    (!esp || m.especialidad === esp) && (!ciu || m.ciudad === ciu)
+                ));
             };
 
-            filtroEspecialidad.addEventListener('change', filtrarMedicos);
-            filtroCiudad.addEventListener('change', filtrarMedicos);
-            renderMedicos(medicos);
+            espSel.addEventListener('change', filtrar);
+            ciuSel.addEventListener('change', filtrar);
+            render(medicos);
         } catch (error) {
             console.error('Error al cargar directorio médico:', error);
-            listaDirectorio.innerHTML = '<p class="text-red-500">Error al cargar el directorio.</p>';
+            lista.innerHTML = '<p class="text-red-500">Error al cargar el directorio.</p>';
         }
     };
 
-    /**
-     * Registro del Service Worker para PWA.
-     * NOTA: La ruta es relativa para funcionar tanto en localhost como en GitHub Pages.
-     */
     const registerServiceWorker = () => {
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./service-worker.js')
-                    .then(reg => console.log('✅ Service Worker registrado correctamente:', reg))
-                    .catch(err => console.error('❌ Error al registrar el Service Worker:', err));
-            });
+            navigator.serviceWorker
+                .register('./service-worker.js')
+                .then(reg => console.log('✅ Service Worker registrado correctamente:', reg))
+                .catch(err => console.error('❌ Error al registrar el Service Worker:', err));
         } else {
             console.warn('⚠️ El navegador no soporta Service Workers');
         }
     };
 
-    // 🚀 Inicializar aplicación
     initApp();
 });
