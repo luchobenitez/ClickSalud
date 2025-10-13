@@ -114,6 +114,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    // Detectar contexto de ejecución (local o GitHub Pages)
+    const basePath = location.hostname.includes('github.io')
+        ? '/ClickSalud/'
+        : './';
     let medicosCache = null;
     const initDirectorioPage = async () => {
         const lista = document.getElementById('directorio-lista');
@@ -123,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             if (!medicosCache) {
-                const res = await fetch('assets/data/medicos.json');
+                const res = await fetch(`${basePath}assets/js/medicos.js`);
                 medicosCache = await res.json();
             }
             const medicos = medicosCache;
