@@ -72,10 +72,17 @@ document.addEventListener('DOMContentLoaded', () => {
             break;                
 
             case 'recordatorios':
-                import(`${basePath}assets/js/recordatorio.js`)
+                import(`${basePath}assets/js/recordatorios.js`)
+                    .then(modul => {
+                        if (typeof module.initRecordatorios === 'function') {
+                            module.initRecordatorios();
+                        } else {
+                            console.warn('⚠️ initRecordatorios() no encontrada en recordatorios.js');
+                    }
+                   })
                     .catch(err => console.error('Error al inicializar recordatorios:', err));
-            break;                            
-        
+                eak;
+
             case 'citas':
                 import(`${basePath}assets/js/medicos.js`)
                 //import(medicos.js)
