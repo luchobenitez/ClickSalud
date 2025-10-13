@@ -1,12 +1,12 @@
 // @ts-check
 // MIME: application/javascript
+// Click-Salud Service Worker - Versión optimizada para GitHub Pages
 
-const CACHE_NAME = 'click-salud-cache-v1';
+const CACHE_NAME = 'click-salud-cache-v2';
 const urlsToCache = [
   './',
   './index.html',
   './manifest.json',
-  './service-worker.js',
   './assets/css/styles.css',
   './assets/js/app.js',
   './assets/js/medicos.js',
@@ -23,51 +23,65 @@ const urlsToCache = [
   './assets/data/resultados.json'
 ];
 
-// Evento de instalación: se abre el caché y se añaden los archivos base.
+/* ==========================================================================
+   INSTALACIÓN
+   ========================================================================== */
 self.addEventListener('install', event => {
+  console.log('[ServiceWorker] Instalando y cacheando recursos...');
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => {
-        console.log('Cache abierto');
-        return cache.addAll(urlsToCache);
-      })
+      .then(cache => cache.addAll(urlsToCache))
+      .then(() => self.skipWaiting())
+      .catch(err => console.error('[ServiceWorker] Error al cachear:', err))
   );
 });
 
-// Evento fetch: intercepta las peticiones y responde desde el caché si es posible.
-self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        // Si el recurso está en el caché, lo devuelve.
-        if (response) {
-          return response;
-        }
-        // Si no, lo busca en la red.
-        return fetch(event.request);
-      }
-    )
-  );
-});
-
-// Evento de activación: limpia cachés antiguos.
+/* ==========================================================================
+   ACTIVACIÓN
+   ========================================================================== */
 self.addEventListener('activate', event => {
+  console.log('[ServiceWorker] Activando y limpiando versiones antiguas...');
   const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
+    caches.keys().then(cacheNames =>
+      Promise.all(
         cacheNames.map(cacheName => {
-          if (cacheWhitelist.indexOf(cacheName) === -1) {
+          if (!cacheWhitelist.includes(cacheName)) {
+            console.log(`[ServiceWorker] Eliminando caché antigua: ${cacheName}`);
             return caches.delete(cacheName);
           }
         })
-      );
-    })
+      )
+    ).then(() => self.clients.claim())
   );
 });
 
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./service-worker.js')
-    .then(() => console.log('Service Worker registrado correctamente'))
-    .catch(err => console.error('Error al registrar el Service Worker:', err));
-}
+/* ==========================================================================
+   INTERCEPTAR PETICIONES (FETCH)
+   ========================================================================== */
+self.addEventListener('fetch', event => {
+  // Evitar cachear llamadas al propio SW o peticiones externas que fallen CORS
+  if (event.request.url.includes('service-worker.js')) return;
+
+  event.respondWith(
+    caches.match(event.request).then(response => {
+      // Retorna desde caché si existe
+      if (response) return response;
+
+      // Si no está cacheado, intenta buscarlo en la red
+      return fetch(event.request)
+        .then(networkResponse => {
+          // Cachear dinámicamente solo si es una respuesta válida (status 200)
+          if (!networkResponse || networkResponse.status !== 200) return networkResponse;
+
+          const responseClone = networkResponse.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, responseClone));
+          return networkResponse;
+        })
+        .catch(err => {
+          console.warn('[ServiceWorker] Falló la red:', err);
+          // Aquí podrías devolver una página offline personalizada si quisieras
+        });
+    })
+  );
+});

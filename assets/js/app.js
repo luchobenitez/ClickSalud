@@ -1,12 +1,14 @@
 /**
+ * ==========================================================================
  * Click-Salud | app.js
- * ---------------------
+ * --------------------------------------------------------------------------
  * Control principal de la aplicación PWA:
  *  - Carga dinámica de componentes (header, footer, nav)
  *  - Router hash simple
  *  - Gestión del tema claro/oscuro
- *  - Registro del Service Worker
+ *  - Registro del Service Worker (ajustado para GitHub Pages)
  *  - Inicialización de páginas específicas
+ * ==========================================================================
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -16,99 +18,95 @@ document.addEventListener('DOMContentLoaded', () => {
     const mainNav = document.getElementById('main-nav');
 
     /**
-     * Carga un componente HTML desde la carpeta /components y lo inyecta en un elemento.
-     * @param {string} component - Nombre del archivo (ej: 'header.html')
+     * Carga un componente HTML desde /components y lo inyecta en un contenedor destino.
+     * @param {string} component - Nombre del archivo, ej: 'header.html'
      * @param {HTMLElement} element - Elemento destino donde se inyectará el HTML.
      */
     const loadComponent = async (component, element) => {
         try {
             const response = await fetch(`components/${component}`);
             if (!response.ok) throw new Error(`No se pudo cargar ${component}`);
-            const html = await response.text();
-            element.innerHTML = html;
+            element.innerHTML = await response.text();
         } catch (error) {
-            console.error(error);
+            console.error(`[Error] ${component}:`, error);
             element.innerHTML = `<p class="text-red-500 text-center">Error al cargar ${component}</p>`;
         }
     };
 
     /**
-     * Carga una página desde /pages/ y la inyecta en el contenedor principal.
-     * @param {string} page - Nombre de la página (ej: 'dashboard')
+     * Carga una página desde /pages y la inyecta en el contenedor principal.
+     * @param {string} page - Nombre base de la página (ej: 'dashboard')
      */
     const loadPage = async (page) => {
         try {
             const response = await fetch(`pages/${page}.html`);
             if (!response.ok) {
-                appContent.innerHTML = `<p class="text-center">Página no encontrada.</p>`;
+                appContent.innerHTML = `<p class="text-center text-gray-500">Página no encontrada.</p>`;
                 return;
             }
-            const html = await response.text();
-            appContent.innerHTML = html;
+            appContent.innerHTML = await response.text();
         } catch (error) {
             console.error('Error al cargar la página:', error);
-            appContent.innerHTML = `<p class="text-center">Error al cargar el contenido.</p>`;
+            appContent.innerHTML = `<p class="text-center text-red-500">Error al cargar el contenido.</p>`;
         }
     };
 
     /**
-     * Router basado en el hash de la URL.
+     * Router basado en el hash (#ruta)
      * Ejemplo: #directorio → carga pages/directorio.html
      */
     const router = async () => {
         const hash = window.location.hash.substring(1) || 'dashboard';
         await loadPage(hash);
 
-        // Lógica específica por página
         switch (hash) {
             case 'directorio':
                 initDirectorioPage();
                 break;
             case 'soporte':
-                // lógica adicional opcional
+                // lógica futura
                 break;
             case 'historia-clinica':
-                // lógica adicional opcional
+                // lógica futura
                 break;
         }
     };
 
     /**
-     * Inicializa la aplicación: carga componentes, router, tema y SW.
+     * Inicializa la aplicación principal.
      */
     const initApp = async () => {
-        console.log("🚀 Inicializando Click-Salud...");
+        console.log('🚀 Inicializando Click-Salud...');
 
-        // 1️⃣ Cargar el header primero (necesario para themeToggle)
+        // 1️⃣ Cargar el header (necesario para el interruptor de tema)
         await loadComponent('header.html', mainHeader);
 
-        // 2️⃣ Inicializar el interruptor de tema (requiere header cargado)
+        // 2️⃣ Inicializar tema claro/oscuro
         initThemeToggle();
 
-        // 3️⃣ Cargar los demás componentes en paralelo
+        // 3️⃣ Cargar footer y navegación móvil en paralelo
         await Promise.all([
             loadComponent('footer.html', mainFooter),
             loadComponent('nav-mobile.html', mainNav)
         ]);
 
-        // 4️⃣ Configurar el router y escuchar cambios de hash
+        // 4️⃣ Activar router
         window.addEventListener('hashchange', router);
         router();
 
-        // 5️⃣ Registrar el Service Worker
+        // 5️⃣ Registrar Service Worker (rutas relativas para GitHub Pages)
         registerServiceWorker();
     };
 
     /**
-     * Inicializa el cambio de tema oscuro/claro.
-     * Controla el almacenamiento en localStorage y el ícono del tema.
+     * Gestión del tema oscuro/claro con persistencia en localStorage.
      */
     const initThemeToggle = () => {
         const themeToggle = document.getElementById('theme-toggle');
         const themeIcon = document.getElementById('theme-icon');
 
         if (!themeToggle || !themeIcon) {
-            console.warn('⚠️ Botón de tema no encontrado en el DOM');
+            console.warn('⚠️ Botón de tema no encontrado');
             return;
         }
 
@@ -125,14 +123,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
-        // Estado inicial
-        if (userTheme) {
-            applyTheme(userTheme);
-        } else {
-            applyTheme(systemPrefersDark ? 'dark' : 'light');
-        }
+        // Tema inicial
+        applyTheme(userTheme || (systemPrefersDark ? 'dark' : 'light'));
 
-        // Listener del botón
+        // Listener de botón
         themeToggle.addEventListener('click', () => {
             const isDark = document.documentElement.classList.toggle('dark');
             const newTheme = isDark ? 'dark' : 'light';
@@ -140,11 +134,11 @@ document.addEventListener('DOMContentLoaded', () => {
             themeIcon.textContent = isDark ? 'dark_mode' : 'light_mode';
         });
 
-        console.log('✅ Theme toggle inicializado');
+        console.log('✅ Cambio de tema inicializado');
     };
 
     /**
-     * Lógica específica para la página del Directorio Médico.
+     * Inicializa la página del Directorio Médico.
      */
     const initDirectorioPage = async () => {
         const listaDirectorio = document.getElementById('directorio-lista');
@@ -160,29 +154,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const especialidades = [...new Set(medicos.map(m => m.especialidad))];
             const ciudades = [...new Set(medicos.map(m => m.ciudad))];
 
-            // Poblar selectores
-            especialidades.forEach(e => {
-                const option = document.createElement('option');
-                option.value = e;
-                option.textContent = e;
-                filtroEspecialidad.appendChild(option);
-            });
-            ciudades.forEach(c => {
-                const option = document.createElement('option');
-                option.value = c;
-                option.textContent = c;
-                filtroCiudad.appendChild(option);
-            });
+            // Cargar opciones
+            especialidades.forEach(e => filtroEspecialidad.add(new Option(e, e)));
+            ciudades.forEach(c => filtroCiudad.add(new Option(c, c)));
 
-            // Renderizado
             const renderMedicos = (lista) => {
-                listaDirectorio.innerHTML = '';
-                if (lista.length === 0) {
-                    listaDirectorio.innerHTML = '<p>No se encontraron médicos con los filtros seleccionados.</p>';
-                    return;
-                }
-                lista.forEach(medico => {
-                    const card = `
+                listaDirectorio.innerHTML = lista.length
+                    ? lista.map(medico => `
                         <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow flex items-center space-x-4">
                             <img src="${medico.foto}" alt="${medico.nombre}" class="h-16 w-16 rounded-full">
                             <div>
@@ -191,50 +169,46 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <p class="text-sm text-gray-500 dark:text-gray-300">${medico.ciudad}</p>
                             </div>
                         </div>
-                    `;
-                    listaDirectorio.innerHTML += card;
-                });
+                    `).join('')
+                    : '<p class="text-gray-500 text-center">No se encontraron médicos con los filtros seleccionados.</p>';
             };
 
-            // Filtros dinámicos
             const filtrarMedicos = () => {
                 const especialidad = filtroEspecialidad.value;
                 const ciudad = filtroCiudad.value;
-
-                const filtrados = medicos.filter(m =>
-                    (especialidad === '' || m.especialidad === especialidad) &&
-                    (ciudad === '' || m.ciudad === ciudad)
+                renderMedicos(
+                    medicos.filter(m =>
+                        (!especialidad || m.especialidad === especialidad) &&
+                        (!ciudad || m.ciudad === ciudad)
+                    )
                 );
-                renderMedicos(filtrados);
             };
 
             filtroEspecialidad.addEventListener('change', filtrarMedicos);
             filtroCiudad.addEventListener('change', filtrarMedicos);
-
             renderMedicos(medicos);
         } catch (error) {
             console.error('Error al cargar directorio médico:', error);
-            listaDirectorio.innerHTML = '<p class="text-red-500">No se pudo cargar el directorio.</p>';
+            listaDirectorio.innerHTML = '<p class="text-red-500">Error al cargar el directorio.</p>';
         }
     };
 
     /**
-     * Registro del Service Worker para la PWA.
+     * Registro del Service Worker para PWA.
+     * NOTA: La ruta es relativa para funcionar tanto en localhost como en GitHub Pages.
      */
     const registerServiceWorker = () => {
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/service-worker.js', { type: 'module' })
-                    .then(registration => {
-                        console.log('Service Worker registrado con éxito:', registration);
-                    })
-                    .catch(error => {
-                        console.error('❌ Error al registrar el Service Worker:', error);
-                    });
+                navigator.serviceWorker.register('./service-worker.js')
+                    .then(reg => console.log('✅ Service Worker registrado correctamente:', reg))
+                    .catch(err => console.error('❌ Error al registrar el Service Worker:', err));
             });
+        } else {
+            console.warn('⚠️ El navegador no soporta Service Workers');
         }
     };
 
-    // 🚀 Iniciar la aplicación
+    // 🚀 Inicializar aplicación
     initApp();
 });
