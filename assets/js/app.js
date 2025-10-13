@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             case 'recordatorios':
                 import(`${basePath}assets/js/recordatorios.js`)
-                    .then(modul => {
+                    .then(module => {
                         if (typeof module.initRecordatorios === 'function') {
                             module.initRecordatorios();
                         } else {
