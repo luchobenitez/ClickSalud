@@ -52,13 +52,14 @@ document.addEventListener('DOMContentLoaded', () => {
     */
     const router = async () => {
         const hash = window.location.hash.substring(1) || 'dashboard';
+        if (hash === 'historia') hash = 'historia-clinica';
         await loadPage(hash);
-
+        
          // Detectar contexto de ejecución (local o GitHub Pages)
         const basePath = location.hostname.includes('github.io')
             ? '/ClickSalud/'
             : './';
-        // if (hash === 'historia') hash = 'historia-clinica';
+
         switch (hash) {
             case 'directorio':
                 import(`${basePath}assets/js/directorio.js`)
@@ -107,12 +108,11 @@ document.addEventListener('DOMContentLoaded', () => {
             // lógica futura
             break;
         
-            case 'historia':
-                await loadPage('historia-clinica');
+            case 'historia-clinica':
                 import(`${basePath}assets/js/historia-clinica.js`)
                 .then(module => module.initHistoriaClinica())
                 .catch(err => console.error('Error al cargar historia clínica:', err));
-                break;
+            break;
         }
     };
 
