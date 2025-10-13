@@ -107,6 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
             break;
         
             case 'historia-clinica':
+                await loadPage('historia-clinica');
                 import(`${basePath}assets/js/historia-clinica.js`)
                 .then(module => module.initHistoriaClinica())
                 .catch(err => console.error('Error al cargar historia clínica:', err));
