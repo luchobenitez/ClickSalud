@@ -1,16 +1,4 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Directorio Médico - Click Salud</title>
-  <link rel="stylesheet" href="./assets/css/styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
-  <script src="../assets/js/app.js" defer></script>
-  <script src="../assets/js/theme.js" defer></script>
-</head>
-<body class="bg-background-light dark:bg-background-dark font-manrope">
-  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <section class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Directorio Médico</h2>
     <p class="text-gray-600 dark:text-gray-400 mb-8">Explora la red de profesionales de salud disponibles en los distintos centros del país.</p>
 
@@ -41,7 +29,7 @@
     </form>
 
     <div id="resultados-directorio" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-  </main>
+  </section>
 
   <script type="module">
     import { obtenerMedicos, filtrarMedicos, renderMedicos } from '../assets/js/medicos.js';
