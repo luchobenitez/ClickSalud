@@ -60,13 +60,14 @@ document.addEventListener('DOMContentLoaded', () => {
             : './';
         switch (hash) {
             case 'directorio':
-            initDirectorioPage();
+                initDirectorioPage();
             break;
         
             case 'citas':
-            import('${basePath}assets/js/medicos.js')
-                .then(module => module.initCitas())
-                .catch(err => console.error('Error al inicializar citas:', err));
+                import(`${basePath}assets/js/medicos.js`)
+                //import(medicos.js)
+                    .then(module => module.initCitas())
+                    .catch(err => console.error('Error al inicializar citas:', err));
             break;
         
             case 'soporte':
