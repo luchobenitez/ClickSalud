@@ -7,7 +7,7 @@
     "fecha_nacimiento": "1958-05-15",
     "edad": 67,
     "sexo": "Femenino",
-    "foto_perfil_url": "assets/img/paciente_elena_gomez.jpg",
+    "foto_perfil_url": "https://randomuser.me/api/portraits/women/75.jpg",
     "grupo_sanguineo": "O+",
     "estado_civil": "Viuda",
     "ocupacion": "Jubilada",
