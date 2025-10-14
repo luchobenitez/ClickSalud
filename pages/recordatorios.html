@@ -1,7 +1,6 @@
-<!-- recordatorios.html -->
 <section class="flex-grow container mx-auto px-4 py-8">
   <div class="max-w-4xl mx-auto">
-    
+
     <!-- Encabezado -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
       <h2 class="text-3xl font-bold text-gray-800 dark:text-gray-200">Recordatorios</h2>
@@ -17,37 +16,111 @@
     <!-- Formulario para nuevo recordatorio -->
     <section id="form-section" class="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg mt-8 hidden">
       <h3 class="text-lg font-bold mb-4 text-gray-800 dark:text-gray-200">Agregar nuevo recordatorio</h3>
-      <form id="form-nuevo-recordatorio" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      
+      <form id="form-nuevo-recordatorio" name="form_nuevo_recordatorio" class="grid grid-cols-1 md:grid-cols-2 gap-6" autocomplete="on">
+        
+        <!-- Columna izquierda -->
         <div class="space-y-4">
           <div>
-            <label for="titulo" class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Título del Recordatorio</label>
-            <input id="titulo" type="text" placeholder="Ej: Tomar Vitamina D" class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-blue-500 focus:border-blue-500">
+            <label for="titulo" class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+              Título del Recordatorio
+            </label>
+            <input
+              id="titulo"
+              name="titulo"
+              type="text"
+              placeholder="Ej: Tomar Vitamina D"
+              class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-blue-500 focus:border-blue-500"
+              required
+            >
           </div>
+
           <div>
-            <label for="frequency" class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Frecuencia</label>
-            <select id="frequency" class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-blue-500 focus:border-blue-500">
-              <option>Una vez</option>
-              <option>Diariamente</option>
-              <option>Semanalmente</option>
-              <option>Mensualmente</option>
+            <label for="frequency" class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+              Frecuencia
+            </label>
+            <select
+              id="frequency"
+              name="frequency"
+              class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-blue-500 focus:border-blue-500"
+              required
+            >
+              <option value="once">Una vez</option>
+              <option value="daily">Diariamente</option>
+              <option value="weekly">Semanalmente</option>
+              <option value="monthly">Mensualmente</option>
             </select>
           </div>
+
           <div>
-            <label for="time" class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Hora</label>
-            <input id="time" type="time" value="09:00" class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-blue-500 focus:border-blue-500">
+            <label for="time" class="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+              Hora
+            </label>
+            <input
+              id="time"
+              name="time"
+              type="time"
+              value="09:00"
+              class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-blue-500 focus:border-blue-500"
+              required
+            >
           </div>
         </div>
 
+        <!-- Columna derecha -->
         <div>
           <p class="text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">Canal de notificación</p>
           <div class="space-y-2">
-            <label class="flex items-center gap-2"><input type="checkbox" checked class="rounded text-blue-600 focus:ring-blue-500">Notificación en la App</label>
-            <label class="flex items-center gap-2"><input type="checkbox" class="rounded text-blue-600 focus:ring-blue-500">Email</label>
-            <label class="flex items-center gap-2"><input type="checkbox" class="rounded text-blue-600 focus:ring-blue-500">SMS</label>
+            <label for="notif-app" class="flex items-center gap-2">
+              <input
+                id="notif-app"
+                name="notif_app"
+                type="checkbox"
+                value="app"
+                checked
+                class="rounded text-blue-600 focus:ring-blue-500"
+              >
+              Notificación en la App
+            </label>
+
+            <label for="notif-email" class="flex items-center gap-2">
+              <input
+                id="notif-email"
+                name="notif_email"
+                type="checkbox"
+                value="email"
+                class="rounded text-blue-600 focus:ring-blue-500"
+              >
+              Email
+            </label>
+
+            <label for="notif-sms" class="flex items-center gap-2">
+              <input
+                id="notif-sms"
+                name="notif_sms"
+                type="checkbox"
+                value="sms"
+                class="rounded text-blue-600 focus:ring-blue-500"
+              >
+              SMS
+            </label>
           </div>
+
           <div class="mt-6 flex justify-end gap-3">
-            <button type="button" id="btn-cancel-form" class="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-700">Cancelar</button>
-            <button type="submit" class="px-4 py-2 rounded-lg bg-blue-600 text-white font-bold hover:bg-blue-700">Guardar</button>
+            <button
+              type="button"
+              id="btn-cancel-form"
+              class="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-700"
+            >
+              Cancelar
+            </button>
+
+            <button
+              type="submit"
+              class="px-4 py-2 rounded-lg bg-blue-600 text-white font-bold hover:bg-blue-700"
+            >
+              Guardar
+            </button>
           </div>
         </div>
       </form>
