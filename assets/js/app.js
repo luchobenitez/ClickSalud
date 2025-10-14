@@ -103,11 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     })
                     .catch(err => console.error('Error al inicializar Centros:', err));
                 break;
-       
-            case 'soporte':
-            // lógica futura
-            break;
-        
+                
             case 'historia-clinica':
                 import(`${basePath}assets/js/historia-clinica.js`)
                 .then(module => module.initHistoriaClinica())
