@@ -130,6 +130,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     .then(module => module.initPerfil())
                     .catch(err => console.error('Error al inicializar Perfil:', err));
             break;
+            
+            case 'configuracion':
+                import(`${basePath}assets/js/configuracion.js`)
+                    .then(module => module.initConfiguracion())
+                    .catch(err => console.error('Error al inicializar Configuración:', err));
+            break;
 
 
         }

@@ -11,6 +11,7 @@ const urlsToCache = [
   './assets/css/styles.css',
   './assets/js/app.js',
   './assets/js/centros.js',
+  './assets/js/configuracion.js',
   './assets/js/directorio.js',
   './assets/js/farmacia.js',
   './assets/js/header.js',

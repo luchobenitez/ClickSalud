@@ -1,0 +1,91 @@
+<!-- Página: Configuración de la Aplicación -->
+<section id="configuracion-container" class="container mx-auto px-4 py-8">
+
+  <!-- Encabezado -->
+  <div class="mb-8">
+    <h2 class="text-3xl font-bold text-blue-700 dark:text-blue-400 mb-2">
+      Configuración
+    </h2>
+    <p class="text-gray-600 dark:text-gray-400">
+      Administra tus preferencias en la aplicación Click-Salud.
+    </p>
+  </div>
+
+  <!-- Preferencias generales -->
+  <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 mb-6">
+    <h3 class="text-xl font-semibold mb-4 border-b pb-2 dark:border-gray-700">
+      Preferencias generales
+    </h3>
+
+    <div class="space-y-6">
+      <!-- Tema -->
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="font-semibold text-gray-800 dark:text-gray-200">Tema</p>
+          <p class="text-sm text-gray-500 dark:text-gray-400">Elige entre modo claro u oscuro.</p>
+        </div>
+        <select id="select-tema"
+          class="rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-200 px-3 py-2">
+          <option value="light">Claro</option>
+          <option value="dark">Oscuro</option>
+        </select>
+      </div>
+
+      <!-- Idioma -->
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="font-semibold text-gray-800 dark:text-gray-200">Idioma</p>
+          <p class="text-sm text-gray-500 dark:text-gray-400">Selecciona el idioma de la interfaz.</p>
+        </div>
+        <select id="select-idioma"
+          class="rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-200 px-3 py-2">
+          <option value="es">Español</option>
+          <option value="en">Inglés</option>
+          <option value="pt">Portugués</option>
+        </select>
+      </div>
+
+      <!-- Notificaciones -->
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="font-semibold text-gray-800 dark:text-gray-200">Notificaciones</p>
+          <p class="text-sm text-gray-500 dark:text-gray-400">Activa o desactiva las alertas y recordatorios.</p>
+        </div>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input id="toggle-notificaciones" type="checkbox" class="sr-only peer">
+          <div
+            class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:bg-blue-600 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full peer-checked:after:border-white">
+          </div>
+        </label>
+      </div>
+
+      <!-- Sincronización -->
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="font-semibold text-gray-800 dark:text-gray-200">Sincronización de datos</p>
+          <p class="text-sm text-gray-500 dark:text-gray-400">Permitir sincronización con servicios externos.</p>
+        </div>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input id="toggle-sync" type="checkbox" class="sr-only peer">
+          <div
+            class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:bg-green-600 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full peer-checked:after:border-white">
+          </div>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botón de guardado -->
+  <div class="text-center mt-8">
+    <button id="btn-guardar-config"
+      class="px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition">
+      Guardar cambios
+    </button>
+  </div>
+
+  <!-- Mensaje de confirmación -->
+  <div id="mensaje-guardado" class="hidden mt-6 text-center text-green-600 dark:text-green-400 font-semibold">
+    ✅ Configuración guardada correctamente
+  </div>
+
+</section>
