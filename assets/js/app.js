@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
          // Detectar contexto de ejecución (local o GitHub Pages)
         const basePath = location.hostname.includes('github.io')
             ? '/ClickSalud/'
-            : './';
+            : '/';
 
         switch (hash) {
             case 'directorio':
@@ -116,7 +116,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             case 'resultados':
                 import(`${basePath}assets/js/resultados.js`)
-                    .then(module => module.initResultados && module.initResultados());
+                    .then(module => module.initResultados && module.initResultados())
+                    .catch(err => console.error('Error al cargar resultados:', err));
             break;
             
         }
