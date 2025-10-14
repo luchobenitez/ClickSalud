@@ -177,6 +177,18 @@ document.addEventListener('DOMContentLoaded', () => {
     
         // 4️⃣ Activar router y SW
         window.addEventListener('hashchange', router);
+        // 👇 NUEVO: también escuchar clics en enlaces con hash dentro del documento
+        document.body.addEventListener('click', (e) => {
+            const target = e.target.closest('a[href^="#"]');
+            if (target) {
+                e.preventDefault();
+                const hash = target.getAttribute('href');
+                if (hash) {
+                window.location.hash = hash; // esto dispara el hashchange → router()
+                }
+            }
+        });
+
         router();
         registerServiceWorker();
     };
