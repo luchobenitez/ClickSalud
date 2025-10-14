@@ -113,6 +113,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 .then(module => module.initHistoriaClinica())
                 .catch(err => console.error('Error al cargar historia clínica:', err));
             break;
+
+            case 'resultados':
+                import(`${basePath}assets/js/resultados.js`)
+                    .then(module => module.initResultados && module.initResultados());
+            break;
+            
         }
     };
 

@@ -15,6 +15,7 @@ const urlsToCache = [
   './assets/js/historia-clinica.js',
   './assets/js/medicos.js',
   './assets/js/recordatorios.js',
+  './assets/js/resultados.js',
   './assets/js/theme.js',
   './assets/img/clicksaludLogo.png',
   'https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap',
@@ -25,6 +26,7 @@ const urlsToCache = [
   './assets/data/historia-clinica.json',
   './assets/data/medicos.json',
   './assets/data/recordatorios.json',
+  './assets/data/resultados.json',
   './assets/data/resultados.json'
 ];
 

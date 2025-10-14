@@ -1,4 +1,4 @@
-<!-- Contenido: Mis Estudios de Laboratorio -->
+<!-- Página: Resultados de Laboratorio -->
 <section class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
   <div class="max-w-5xl mx-auto">
     <header class="mb-8">
@@ -18,163 +18,28 @@
           </tr>
         </thead>
         <tbody id="tabla-resultados-body">
-          <!-- Filas se insertarán dinámicamente -->
+          <!-- Filas generadas dinámicamente -->
         </tbody>
       </table>
     </div>
-
-    <!-- Detalle del estudio (inicialmente oculto) -->
-    <section id="detalle-estudio-section" class="mt-12 p-6 bg-white dark:bg-gray-800/50 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700/50 hidden">
-      <div class="flex flex-col sm:flex-row justify-between items-start gap-4">
-        <div>
-          <h3 id="detalle-titulo" class="text-xl font-bold text-gray-900 dark:text-white"></h3>
-          <p id="detalle-fecha" class="text-sm text-gray-500 dark:text-gray-400"></p>
-        </div>
-        <button id="btn-descargar-pdf" class="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
-          <span class="material-symbols-outlined">download</span>
-          Descargar PDF
-        </button>
-      </div>
-
-      <div class="mt-6 border-t border-gray-200 dark:border-gray-700/50 pt-6">
-        <div class="grid grid-cols-3 gap-x-8 gap-y-4 text-sm font-mono">
-          <div class="font-semibold text-gray-600 dark:text-gray-300">Analito</div>
-          <div class="font-semibold text-right text-gray-600 dark:text-gray-300">Resultado</div>
-          <div class="font-semibold text-gray-600 dark:text-gray-300">Rango de Referencia</div>
-          <!-- Resultados de analitos se insertarán aquí -->
-        </div>
-        <div id="detalle-analitos-container" class="grid grid-cols-3 gap-x-8 gap-y-4 text-sm font-mono mt-4">
-        </div>
-      </div>
-      
-      <div id="detalle-interpretacion-container" class="mt-6 border-t border-gray-200 dark:border-gray-700/50 pt-6">
-        <h4 class="font-semibold text-gray-800 dark:text-gray-200 mb-2">Nota de Interpretación Médica</h4>
-        <p id="detalle-interpretacion" class="text-sm text-gray-600 dark:text-gray-400 italic"></p>
-      </div>
-    </section>
   </div>
-</main>
+</section>
 
-<footer class="text-center py-6 mt-8 border-t border-gray-200 dark:border-gray-700">
-    <p class="text-xs text-gray-500 dark:text-gray-400">
-        Su información está protegida. El acceso a sus resultados queda registrado para garantizar su privacidad y seguridad.
-    </p>
-    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
-        © 2025 Click-Salud. Todos los derechos reservados.
-    </p>
-</footer>
+<!-- Modal para detalles de resultado -->
+<div id="modalResultados" class="fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50">
+  <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg w-11/12 md:w-2/3 lg:w-1/2 p-6 relative">
+    <button id="cerrarModal" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+      <span class="material-symbols-outlined">close</span>
+    </button>
+    <h3 id="modalTitulo" class="text-xl font-bold text-gray-900 dark:text-white mb-2"></h3>
+    <p id="modalFecha" class="text-sm text-gray-500 dark:text-gray-400 mb-4"></p>
+    <div id="modalContenido" class="text-sm text-gray-700 dark:text-gray-300"></div>
+    <div class="mt-4 text-right">
+      <a id="modalDescargar" target="_blank"
+         class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 hidden">
+        Descargar PDF
+      </a>
+    </div>
+  </div>
+</div>
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const tablaBody = document.getElementById('tabla-resultados-body');
-    const detalleSection = document.getElementById('detalle-estudio-section');
-    const detalleTitulo = document.getElementById('detalle-titulo');
-    const detalleFecha = document.getElementById('detalle-fecha');
-    const detalleAnalitosContainer = document.getElementById('detalle-analitos-container');
-    const detalleInterpretacion = document.getElementById('detalle-interpretacion');
-    const btnDescargarPdf = document.getElementById('btn-descargar-pdf');
-
-    let resultadosData = [];
-
-    const renderTabla = (resultados) => {
-        if (!tablaBody) return;
-        tablaBody.innerHTML = '';
-        resultados.forEach(resultado => {
-            const estadoClass = resultado.estado === 'disponible' 
-                ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300' 
-                : 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/50 dark:text-yellow-300';
-            
-            const estadoIcon = resultado.estado === 'disponible' ? 'check_circle' : 'hourglass_empty';
-
-            const accionHtml = resultado.estado === 'disponible'
-                ? `<a href="#" data-id="${resultado.id}" class="text-blue-600 dark:text-blue-400 hover:underline font-medium ver-detalles">Ver detalles</a>`
-                : `<span class="text-gray-400 dark:text-gray-500">No disponible</span>`;
-
-            const fila = `
-                <tr class="border-b border-gray-200 dark:border-gray-700/50 hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors">
-                    <td class="px-6 py-4">${new Date(resultado.fecha).toLocaleDateString('es-ES')}</td>
-                    <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">${resultado.tipo}</td>
-                    <td class="px-6 py-4 text-center">
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${estadoClass}">
-                            <span class="material-symbols-outlined text-sm mr-1.5">${estadoIcon}</span> ${resultado.estado.charAt(0).toUpperCase() + resultado.estado.slice(1)}
-                        </span>
-                    </td>
-                    <td class="px-6 py-4 text-right">${accionHtml}</td>
-                </tr>
-            `;
-            tablaBody.innerHTML += fila;
-        });
-
-        // Añadir event listeners a los nuevos enlaces
-        document.querySelectorAll('.ver-detalles').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const id = parseInt(e.target.dataset.id, 10);
-                mostrarDetalle(id);
-            });
-        });
-    };
-
-    const mostrarDetalle = (id) => {
-        const resultado = resultadosData.find(r => r.id === id);
-        if (!resultado || !resultado.detalles) return;
-
-        detalleTitulo.textContent = `Detalle: ${resultado.tipo}`;
-        detalleFecha.textContent = `Fecha: ${new Date(resultado.fecha).toLocaleDateString('es-ES')}`;
-        
-        detalleAnalitosContainer.innerHTML = '';
-        resultado.detalles.analitos.forEach(analito => {
-            const analitoHtml = `
-                <div class="text-gray-800 dark:text-gray-200 col-span-3 md:col-span-1">${analito.nombre}</div>
-                <div class="text-right text-gray-800 dark:text-gray-200 col-span-3 md:col-span-1">${analito.resultado}</div>
-                <div class="text-gray-500 dark:text-gray-400 col-span-3 md:col-span-1">${analito.rango}</div>
-            `;
-            detalleAnalitosContainer.innerHTML += analitoHtml;
-        });
-
-        detalleInterpretacion.textContent = resultado.detalles.interpretacion;
-        detalleSection.classList.remove('hidden');
-        detalleSection.scrollIntoView({ behavior: 'smooth' });
-    };
-
-    const initResultados = async () => {
-        try {
-            const response = await fetch('assets/data/resultados.json');
-            if (!response.ok) throw new Error('No se pudieron cargar los resultados.');
-            // Simulación de datos detallados para el ejemplo
-            const baseData = await response.json();
-            resultadosData = baseData.map(r => {
-                if (r.id === 1) {
-                    r.detalles = {
-                        analitos: [
-                            { nombre: 'Hemoglobina', resultado: '14.5 g/dL', rango: '12.0 - 16.0 g/dL' },
-                            { nombre: 'Glucosa', resultado: '95 mg/dL', rango: '70 - 100 mg/dL' },
-                            { nombre: 'Colesterol Total', resultado: '180 mg/dL', rango: '< 200 mg/dL' }
-                        ],
-                        interpretacion: 'Los resultados se encuentran dentro de los rangos de referencia normales. Se recomienda control anual.'
-                    };
-                }
-                if (r.id === 2) {
-                     r.detalles = {
-                        analitos: [],
-                        interpretacion: 'No se observan infiltrados, derrames ni otras anomalías en los campos pulmonares visualizados. Estructuras cardiovasculares dentro de límites normales.'
-                    };
-                }
-                return r;
-            });
-            renderTabla(resultadosData);
-        } catch (error) {
-            console.error(error);
-            if (tablaBody) {
-                tablaBody.innerHTML = `<tr><td colspan="4" class="text-center p-4 text-red-500">Error al cargar los resultados.</td></tr>`;
-            }
-        }
-    };
-
-    btnDescargarPdf.addEventListener('click', () => {
-        alert('Simulación: Iniciando descarga del informe de resultados en formato PDF.');
-    });
-
-    initResultados();
-});
-</script>
