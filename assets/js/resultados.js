@@ -1,13 +1,14 @@
+
 export function initResultados() {
-  // Esperar a que el DOM de la página resultados.html esté completamente insertado
-  const esperarDOM = setInterval(() => {
+  function esperarDOM() {
     const tablaBody = document.getElementById('tabla-resultados-body');
-    if (!tablaBody) return; // esperar hasta que exista en el DOM
-
-    clearInterval(esperarDOM); // continuar normalmente
-
-    iniciarRenderizado(tablaBody);
-  }, 50);
+    if (tablaBody) {
+      iniciarRenderizado(tablaBody);
+    } else {
+      requestAnimationFrame(esperarDOM);
+    }
+  }
+  requestAnimationFrame(esperarDOM);
 }
 
 // --- función auxiliar que contiene toda la lógica actual ---
