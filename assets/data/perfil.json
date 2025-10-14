@@ -1,0 +1,63 @@
+{
+  "ficha_principal": "HC-2025-45321",
+  "datos_personales": {
+    "nombres": "Elena Beatriz",
+    "apellidos": "Gómez Pereira",
+    "cedula_identidad": "1.234.567",
+    "fecha_nacimiento": "1958-05-15",
+    "edad": 67,
+    "sexo": "Femenino",
+    "foto_perfil_url": "assets/img/paciente_elena_gomez.jpg",
+    "grupo_sanguineo": "O+",
+    "estado_civil": "Viuda",
+    "ocupacion": "Jubilada",
+    "contacto_emergencia": {
+      "nombre": "Ricardo Gómez",
+      "parentesco": "Hijo",
+      "telefono_principal": "+595 981 777-123"
+    },
+    "contacto_propio": {
+      "telefono_movil": "+595 991 123-456",
+      "email": "elena.gomez.p@email.com",
+      "direccion": "Calle Oliva c/ Alberdi 411, Asunción"
+    }
+  },
+  "datos_de_salud_resumen": {
+    "diagnostico_cronico_principal": {
+      "cie10": "I50.4",
+      "descripcion": "Insuficiencia Cardíaca Crónica (FEVI: 35%)"
+    },
+    "comorbilidades": [
+      {"cie10": "I11.0", "descripcion": "Cardiopatía Hipertensiva"},
+      {"cie10": "E11.9", "descripcion": "Diabetes Mellitus Tipo 2"},
+      {"cie10": "I48.0", "descripcion": "Fibrilación Auricular Crónica"},
+      {"cie10": "J44.9", "descripcion": "EPOC leve"}
+    ],
+    "medicamentos_cronicos": [
+      "Losartán 50 mg",
+      "Furosemida 40 mg (x2/día)",
+      "Bisoprolol 5 mg",
+      "Metformina 850 mg (x2/día)",
+      "Atorvastatina 20 mg",
+      "Omeprazol 20 mg"
+    ],
+    "alergias": [
+      {"sustancia": "Penicilina", "reaccion": "Rash cutáneo"}
+    ],
+    "vacunas_covid": "Esquema completo (3 dosis)",
+    "historial_quirurgico": ["Colecistectomía (2005)"]
+  },
+  "datos_de_la_aplicacion": {
+    "usuario_app": "EBeatrizGP",
+    "fecha_registro": "2024-12-01",
+    "ips_asociado": "IPS / MSPBS",
+    "centro_medico_base": "Hospital General San Pablo",
+    "preferencia_tema": "dark"
+  },
+  "metas_de_salud": {
+    "presion_arterial_objetivo": "130/80 mmHg",
+    "glucosa_ayunas_objetivo": "90 - 130 mg/dL",
+    "peso_objetivo": "75 kg",
+    "frecuencia_cardiaca_objetivo": "60 - 80 lpm"
+  }
+}

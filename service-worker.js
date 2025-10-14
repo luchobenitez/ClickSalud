@@ -16,6 +16,7 @@ const urlsToCache = [
   './assets/js/header.js',
   './assets/js/historia-clinica.js',
   './assets/js/medicos.js',
+  './assets/js/perfil.js',
   './assets/js/recordatorios.js',
   './assets/js/resultados.js',
   './assets/js/theme.js',

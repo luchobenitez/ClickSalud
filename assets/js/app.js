@@ -125,6 +125,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     .then(module => module.initFarmacia());
             break;
 
+            case 'perfil':
+                import(`${basePath}assets/js/perfil.js`)
+                    .then(module => module.initPerfil())
+                    .catch(err => console.error('Error al inicializar Perfil:', err));
+            break;
+
+
         }
     };
 

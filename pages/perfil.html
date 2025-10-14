@@ -1,8 +1,67 @@
-<!-- Contenido: Perfil del Usuario -->
-<div class="p-4">
-    <h2 class="text-2xl font-bold mb-4">Mi Perfil</h2>
-    <p class="text-gray-600 dark:text-gray-400">Este módulo permitirá a los usuarios ver y editar su información personal.</p>
-    <div class="mt-6 p-6 bg-yellow-100 dark:bg-yellow-900 border-l-4 border-yellow-500 text-yellow-700 dark:text-yellow-200">
-        <p><span class="font-bold">Funcionalidad en desarrollo.</span></p>
+<!-- Página: Perfil del Usuario / Ficha Clínica -->
+<section id="perfil-container" class="container mx-auto px-4 py-8">
+
+  <!-- Encabezado -->
+  <div class="flex items-center space-x-6 mb-8">
+    <img id="foto-perfil" src="assets/img/default-avatar.png" alt="Foto de perfil"
+         class="w-24 h-24 rounded-full border-4 border-blue-500 shadow-lg">
+    <div>
+      <h2 id="nombre-completo" class="text-2xl font-bold text-blue-700 dark:text-blue-400">Cargando...</h2>
+      <p id="ocupacion" class="text-gray-600 dark:text-gray-300">—</p>
+      <p id="cedula" class="text-gray-500 dark:text-gray-400 text-sm">CI: —</p>
     </div>
-</div>
+  </div>
+
+  <!-- Datos Personales -->
+  <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 mb-6">
+    <h3 class="text-xl font-semibold mb-4 border-b pb-2 dark:border-gray-700">Datos Personales</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 dark:text-gray-300">
+      <p><span class="font-semibold">Fecha de nacimiento:</span> <span id="fecha-nacimiento">—</span></p>
+      <p><span class="font-semibold">Edad:</span> <span id="edad">—</span></p>
+      <p><span class="font-semibold">Sexo:</span> <span id="sexo">—</span></p>
+      <p><span class="font-semibold">Grupo sanguíneo:</span> <span id="grupo-sanguineo">—</span></p>
+      <p><span class="font-semibold">Estado civil:</span> <span id="estado-civil">—</span></p>
+      <p><span class="font-semibold">Dirección:</span> <span id="direccion">—</span></p>
+      <p><span class="font-semibold">Teléfono móvil:</span> <span id="telefono">—</span></p>
+      <p><span class="font-semibold">Email:</span> <span id="email">—</span></p>
+    </div>
+  </div>
+
+  <!-- Datos de Salud -->
+  <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 mb-6">
+    <h3 class="text-xl font-semibold mb-4 border-b pb-2 dark:border-gray-700">Resumen de Salud</h3>
+    <p><span class="font-semibold">Diagnóstico principal:</span> <span id="diagnostico">—</span></p>
+    
+    <div class="mt-4">
+      <h4 class="font-semibold mb-2">Comorbilidades</h4>
+      <ul id="comorbilidades" class="list-disc list-inside text-gray-700 dark:text-gray-300"></ul>
+    </div>
+
+    <div class="mt-4">
+      <h4 class="font-semibold mb-2">Medicamentos crónicos</h4>
+      <ul id="medicamentos" class="list-disc list-inside text-gray-700 dark:text-gray-300"></ul>
+    </div>
+
+    <div class="mt-4">
+      <h4 class="font-semibold mb-2">Alergias</h4>
+      <ul id="alergias" class="list-disc list-inside text-gray-700 dark:text-gray-300"></ul>
+    </div>
+
+    <div class="mt-4">
+      <p><span class="font-semibold">Vacunas COVID:</span> <span id="vacunas">—</span></p>
+      <p><span class="font-semibold">Historial quirúrgico:</span> <span id="cirugias">—</span></p>
+    </div>
+  </div>
+
+  <!-- Metas de Salud -->
+  <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+    <h3 class="text-xl font-semibold mb-4 border-b pb-2 dark:border-gray-700">Metas de Salud</h3>
+    <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 dark:text-gray-300">
+      <li><span class="font-semibold">Presión arterial:</span> <span id="meta-pa">—</span></li>
+      <li><span class="font-semibold">Glucosa en ayunas:</span> <span id="meta-glucosa">—</span></li>
+      <li><span class="font-semibold">Peso objetivo:</span> <span id="meta-peso">—</span></li>
+      <li><span class="font-semibold">Frecuencia cardíaca:</span> <span id="meta-fc">—</span></li>
+    </ul>
+  </div>
+
+</section>
