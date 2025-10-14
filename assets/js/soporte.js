@@ -16,6 +16,8 @@ export async function initSoporte() {
   const formSoporte = document.getElementById("form-soporte");
   const mensajeConfirmacion = document.getElementById("mensaje-confirmacion");
 
+  console.log("🟢 initSoporte() iniciado");
+
   try {
     // Detectar ruta base (GitHub Pages o local)
     const basePath = location.hostname.includes("github.io")
@@ -25,6 +27,8 @@ export async function initSoporte() {
     const response = await fetch(`${basePath}assets/data/faqs.json`);
     if (!response.ok) throw new Error("No se pudo cargar faqs.json");
     const faqsData = await response.json();
+    console.log("✅ FAQs cargadas:", faqsData);
+    console.log("🔢 Cantidad de categorías:", faqsData.length);
 
     // --- Llenar categorías únicas ---
     const categorias = [...new Set(faqsData.map((faq) => faq.categoria))];
