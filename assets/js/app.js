@@ -120,6 +120,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     .catch(err => console.error('Error al cargar resultados:', err));
             break;
             
+            case 'farmacia':
+                import(`${basePath}assets/js/farmacia.js`)
+                    .then(module => module.initFarmacia());
+            break;
+
         }
     };
 

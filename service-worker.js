@@ -12,6 +12,7 @@ const urlsToCache = [
   './assets/js/app.js',
   './assets/js/centros.js',
   './assets/js/directorio.js',
+  './assets/js/farmacia.js',
   './assets/js/historia-clinica.js',
   './assets/js/medicos.js',
   './assets/js/recordatorios.js',
@@ -23,10 +24,10 @@ const urlsToCache = [
   './assets/data/beneficios.json',
   './assets/data/centros.json',
   './assets/data/faqs.json',
+  './assets/data/farmacia.json',
   './assets/data/historia-clinica.json',
   './assets/data/medicos.json',
   './assets/data/recordatorios.json',
-  './assets/data/resultados.json',
   './assets/data/resultados.json'
 ];
 
@@ -94,7 +95,8 @@ self.addEventListener('fetch', event => {
 
   // Evitar interceptar el propio SW
   if (request.url.includes('service-worker.js')) return;
-
+  if (request.method !== 'GET') return;
+  
   event.respondWith(
     caches.match(request).then(response => {
       if (response) return response; // Devuelve desde caché si existe

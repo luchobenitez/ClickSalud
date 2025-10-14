@@ -1,0 +1,372 @@
+[
+  {
+    "prescripcion_id": "RX-2025-0100",
+    "fecha_emision": "2025-10-14",
+    "paciente_id": "HC-2025-45321",
+    "medico_tratante": {
+      "nombre": "Dra. Ana Silva",
+      "especialidad": "Cardiología",
+      "contacto": "Interno 456"
+    },
+    "medicamento": {
+      "nombre_comercial": "Cozaar® / Losacor®",
+      "nombre_generico": "Losartán Potásico",
+      "concentracion": "50 mg",
+      "presentacion": "Comprimidos recubiertos",
+      "codigo_nacional": "7896647900115"
+    },
+    "indicaciones_medicas": {
+      "dosis": "50 mg",
+      "frecuencia": "Una vez al día",
+      "momento_del_dia": "Por la mañana",
+      "via_administracion": "Vía oral",
+      "duracion_tratamiento": "Crónico",
+      "proposito": "Control de la Presión Arterial e Insuficiencia Cardíaca (IECA)"
+    },
+    "dispensacion": {
+      "cantidad_asignada": 30,
+      "unidades": "comprimidos",
+      "ciclo_reposicion_dias": 30,
+      "lugar_retiro": "Farmacia Central, Ventanilla Crónicos",
+      "stock_disponible": true,
+      "fecha_vencimiento_receta": "2026-04-14"
+    },
+    "advertencias_e_instrucciones_adicionales": [
+      "No suspender el medicamento sin orden médica. Monitorear la Presión Arterial.",
+      "Evitar el consumo excesivo de sustitutos de sal con potasio."
+    ]
+  },
+  {
+    "prescripcion_id": "RX-2025-0100",
+    "fecha_emision": "2025-10-14",
+    "paciente_id": "HC-2025-45321",
+    "medico_tratante": {
+      "nombre": "Dra. Ana Silva",
+      "especialidad": "Cardiología",
+      "contacto": "Interno 456"
+    },
+    "medicamento": {
+      "nombre_comercial": "Lasix® / Seguril®",
+      "nombre_generico": "Furosemida",
+      "concentracion": "40 mg",
+      "presentacion": "Comprimidos",
+      "codigo_nacional": "7798135200112"
+    },
+    "indicaciones_medicas": {
+      "dosis": "40 mg",
+      "frecuencia": "Dos veces al día (Mañana y Mediodía)",
+      "momento_del_dia": "8 AM y 1 PM",
+      "via_administracion": "Vía oral",
+      "duracion_tratamiento": "Ajuste por edema",
+      "proposito": "Reducir la retención de líquidos (edema) y mejorar la disnea."
+    },
+    "dispensacion": {
+      "cantidad_asignada": 60,
+      "unidades": "comprimidos",
+      "ciclo_reposicion_dias": 30,
+      "lugar_retiro": "Farmacia Central, Ventanilla Crónicos",
+      "stock_disponible": true,
+      "fecha_vencimiento_receta": "2026-04-14"
+    },
+    "advertencias_e_instrucciones_adicionales": [
+      "No tomar después de las 3 PM para evitar interrupción del sueño por micción.",
+      "Informar inmediatamente al médico si hay mareos o calambres musculares (signos de deshidratación o bajo potasio)."
+    ]
+  },
+  {
+    "prescripcion_id": "RX-2025-0100",
+    "fecha_emision": "2025-10-14",
+    "paciente_id": "HC-2025-45321",
+    "medico_tratante": {
+      "nombre": "Dra. Ana Silva",
+      "especialidad": "Cardiología",
+      "contacto": "Interno 456"
+    },
+    "medicamento": {
+      "nombre_comercial": "Concor®",
+      "nombre_generico": "Bisoprolol Fumarato",
+      "concentracion": "5 mg",
+      "presentacion": "Comprimidos",
+      "codigo_nacional": "7896001556789"
+    },
+    "indicaciones_medicas": {
+      "dosis": "5 mg",
+      "frecuencia": "Una vez al día",
+      "momento_del_dia": "Junto con Losartán (mañana)",
+      "via_administracion": "Vía oral",
+      "duracion_tratamiento": "Crónico",
+      "proposito": "Controlar la frecuencia cardíaca y mejorar la función ventricular (Beta Bloqueante)."
+    },
+    "dispensacion": {
+      "cantidad_asignada": 30,
+      "unidades": "comprimidos",
+      "ciclo_reposicion_dias": 30,
+      "lugar_retiro": "Farmacia Central, Ventanilla Crónicos",
+      "stock_disponible": true,
+      "fecha_vencimiento_receta": "2026-04-14"
+    },
+    "advertencias_e_instrucciones_adicionales": [
+      "Medir el pulso antes de tomar. Si es menor a 60 lpm, consultar antes de tomar.",
+      "Puede causar sensación de cansancio inicial. No suspender abruptamente, riesgo de evento cardíaco."
+    ]
+  },
+  {
+    "prescripcion_id": "RX-2025-0101",
+    "fecha_emision": "2025-09-01",
+    "paciente_id": "HC-2025-45321",
+    "medico_tratante": {
+      "nombre": "Dr. Carlos Fernández",
+      "especialidad": "Endocrinología",
+      "contacto": "Interno 210"
+    },
+    "medicamento": {
+      "nombre_comercial": "Glucofage®",
+      "nombre_generico": "Metformina Clorhidrato",
+      "concentracion": "850 mg",
+      "presentacion": "Comprimidos",
+      "codigo_nacional": "7792015004561"
+    },
+    "indicaciones_medicas": {
+      "dosis": "850 mg",
+      "frecuencia": "Dos veces al día",
+      "momento_del_dia": "Con el desayuno y la cena",
+      "via_administracion": "Vía oral",
+      "duracion_tratamiento": "Crónico",
+      "proposito": "Control de la Diabetes Mellitus Tipo 2 (DM2)."
+    },
+    "dispensacion": {
+      "cantidad_asignada": 60,
+      "unidades": "comprimidos",
+      "ciclo_reposicion_dias": 30,
+      "lugar_retiro": "Farmacia Central, Ventanilla DM2",
+      "stock_disponible": true,
+      "fecha_vencimiento_receta": "2026-03-01"
+    },
+    "advertencias_e_instrucciones_adicionales": [
+      "Tomar con alimentos para minimizar malestar estomacal.",
+      "Suspender 48 horas antes y después de cualquier estudio con contraste yodado."
+    ]
+  },
+  {
+    "prescripcion_id": "RX-2025-0102",
+    "fecha_emision": "2025-07-20",
+    "paciente_id": "HC-2025-45321",
+    "medico_tratante": {
+      "nombre": "Dr. Ricardo Giménez",
+      "especialidad": "Medicina Interna",
+      "contacto": "Interno 105"
+    },
+    "medicamento": {
+      "nombre_comercial": "Lipitor®",
+      "nombre_generico": "Atorvastatina",
+      "concentracion": "20 mg",
+      "presentacion": "Comprimidos",
+      "codigo_nacional": "7791234005521"
+    },
+    "indicaciones_medicas": {
+      "dosis": "20 mg",
+      "frecuencia": "Una vez al día",
+      "momento_del_dia": "Por la noche",
+      "via_administracion": "Vía oral",
+      "duracion_tratamiento": "Crónico",
+      "proposito": "Controlar el colesterol LDL y riesgo cardiovascular."
+    },
+    "dispensacion": {
+      "cantidad_asignada": 30,
+      "unidades": "comprimidos",
+      "ciclo_reposicion_dias": 30,
+      "lugar_retiro": "Farmacia Periférica - Barrio Obrero",
+      "stock_disponible": true,
+      "fecha_vencimiento_receta": "2026-01-20"
+    },
+    "advertencias_e_instrucciones_adicionales": [
+      "Evitar el consumo de grandes cantidades de jugo de pomelo (toronja).",
+      "Reportar inmediatamente dolor o debilidad muscular inexplicable."
+    ]
+  },
+  {
+    "prescripcion_id": "RX-2025-0103",
+    "fecha_emision": "2025-08-10",
+    "paciente_id": "HC-2025-45321",
+    "medico_tratante": {
+      "nombre": "Dr. Gustavo Almirón",
+      "especialidad": "Gastroenterología",
+      "contacto": "Interno 301"
+    },
+    "medicamento": {
+      "nombre_comercial": "Losec® / Omeprazol GFA",
+      "nombre_generico": "Omeprazol",
+      "concentracion": "20 mg",
+      "presentacion": "Cápsulas",
+      "codigo_nacional": "7794000336608"
+    },
+    "indicaciones_medicas": {
+      "dosis": "20 mg",
+      "frecuencia": "Una vez al día",
+      "momento_del_dia": "30 minutos antes del desayuno",
+      "via_administracion": "Vía oral",
+      "duracion_tratamiento": "3 meses",
+      "proposito": "Protección gástrica por uso de múltiples medicamentos."
+    },
+    "dispensacion": {
+      "cantidad_asignada": 30,
+      "unidades": "cápsulas",
+      "ciclo_reposicion_dias": 30,
+      "lugar_retiro": "Farmacia Central, Ventanilla General",
+      "stock_disponible": true,
+      "fecha_vencimiento_receta": "2026-02-10"
+    },
+    "advertencias_e_instrucciones_adicionales": [
+      "No masticar ni abrir la cápsula. Tragar entera.",
+      "Usar solo por el tiempo indicado por el médico."
+    ]
+  },
+  {
+    "prescripcion_id": "RX-2025-0104",
+    "fecha_emision": "2025-06-25",
+    "paciente_id": "HC-2025-45321",
+    "medico_tratante": {
+      "nombre": "Dra. Patricia Núñez",
+      "especialidad": "Neumología",
+      "contacto": "Interno 515"
+    },
+    "medicamento": {
+      "nombre_comercial": "Ventolín®",
+      "nombre_generico": "Salbutamol",
+      "concentracion": "100 mcg/dosis",
+      "presentacion": "Inhalador (Puff)",
+      "codigo_nacional": "7791234000007"
+    },
+    "indicaciones_medicas": {
+      "dosis": "2 inhalaciones",
+      "frecuencia": "Según necesidad (SOS)",
+      "momento_del_dia": "Al notar dificultad para respirar",
+      "via_administracion": "Inhalatoria",
+      "duracion_tratamiento": "Crónico",
+      "proposito": "Alivio rápido de broncoespasmo (crisis de EPOC)."
+    },
+    "dispensacion": {
+      "cantidad_asignada": 1,
+      "unidades": "inhalador",
+      "ciclo_reposicion_dias": 90,
+      "lugar_retiro": "Farmacia Especializada - INERAM",
+      "stock_disponible": true,
+      "fecha_vencimiento_receta": "2026-03-25"
+    },
+    "advertencias_e_instrucciones_adicionales": [
+      "Si usa el inhalador más de 4 veces al día, contactar al neumólogo.",
+      "Agitar bien antes de usar. Usar espaciador si está disponible."
+    ]
+  },
+  {
+    "prescripcion_id": "RX-2025-0105",
+    "fecha_emision": "2025-10-10",
+    "paciente_id": "HC-2025-45321",
+    "medico_tratante": {
+      "nombre": "Dr. Fernando Barrios",
+      "especialidad": "Medicina Familiar",
+      "contacto": "USF San Roque"
+    },
+    "medicamento": {
+      "nombre_comercial": "Tafirol®",
+      "nombre_generico": "Paracetamol (Acetaminofén)",
+      "concentracion": "500 mg",
+      "presentacion": "Comprimidos",
+      "codigo_nacional": "7791234001122"
+    },
+    "indicaciones_medicas": {
+      "dosis": "500 mg",
+      "frecuencia": "Cada 6 a 8 horas",
+      "momento_del_dia": "Según dolor/fiebre",
+      "via_administracion": "Vía oral",
+      "duracion_tratamiento": "Máximo 7 días",
+      "proposito": "Tratamiento de dolor leve o fiebre."
+    },
+    "dispensacion": {
+      "cantidad_asignada": 10,
+      "unidades": "comprimidos",
+      "ciclo_reposicion_dias": 0,
+      "lugar_retiro": "Puesto de Salud - San Roque",
+      "stock_disponible": true,
+      "fecha_vencimiento_receta": "2025-11-10"
+    },
+    "advertencias_e_instrucciones_adicionales": [
+      "No exceder la dosis máxima de 4000 mg (8 comprimidos) en 24 horas.",
+      "Evitar si tiene problemas hepáticos graves."
+    ]
+  },
+  {
+    "prescripcion_id": "RX-2025-0106",
+    "fecha_emision": "2025-09-20",
+    "paciente_id": "HC-2025-45321",
+    "medico_tratante": {
+      "nombre": "Dr. Miguel Torres",
+      "especialidad": "Psiquiatría",
+      "contacto": "Consultorio Externo"
+    },
+    "medicamento": {
+      "nombre_comercial": "Zoloft®",
+      "nombre_generico": "Sertralina",
+      "concentracion": "50 mg",
+      "presentacion": "Comprimidos",
+      "codigo_nacional": "7798765432109"
+    },
+    "indicaciones_medicas": {
+      "dosis": "50 mg",
+      "frecuencia": "Una vez al día",
+      "momento_del_dia": "Por la mañana o por la noche",
+      "via_administracion": "Vía oral",
+      "duracion_tratamiento": "Crónico",
+      "proposito": "Tratamiento del trastorno depresivo mayor."
+    },
+    "dispensacion": {
+      "cantidad_asignada": 30,
+      "unidades": "comprimidos",
+      "ciclo_reposicion_dias": 30,
+      "lugar_retiro": "Farmacia Especializada - Hospital Psiquiátrico",
+      "stock_disponible": true,
+      "fecha_vencimiento_receta": "2026-03-20"
+    },
+    "advertencias_e_instrucciones_adicionales": [
+      "El efecto completo puede tardar 4 a 6 semanas. No desanimarse.",
+      "Evitar el alcohol. No suspender bruscamente, debe ser gradual bajo supervisión médica."
+    ]
+  },
+  {
+    "prescripcion_id": "RX-2025-0107",
+    "fecha_emision": "2025-05-15",
+    "paciente_id": "HC-2025-45321",
+    "medico_tratante": {
+      "nombre": "Dra. Isabel Benítez",
+      "especialidad": "Endocrinología",
+      "contacto": "Interno 211"
+    },
+    "medicamento": {
+      "nombre_comercial": "Eutirox®",
+      "nombre_generico": "Levotiroxina Sódica",
+      "concentracion": "75 mcg",
+      "presentacion": "Comprimidos",
+      "codigo_nacional": "7791234008888"
+    },
+    "indicaciones_medicas": {
+      "dosis": "75 mcg",
+      "frecuencia": "Una vez al día",
+      "momento_del_dia": "30-60 minutos antes del desayuno",
+      "via_administracion": "Vía oral",
+      "duracion_tratamiento": "Crónico (Sustitución Hormonal)",
+      "proposito": "Tratamiento del hipotiroidismo."
+    },
+    "dispensacion": {
+      "cantidad_asignada": 30,
+      "unidades": "comprimidos",
+      "ciclo_reposicion_dias": 30,
+      "lugar_retiro": "Farmacia Central, Ventanilla Crónicos",
+      "stock_disponible": true,
+      "fecha_vencimiento_receta": "2026-02-15"
+    },
+    "advertencias_e_instrucciones_adicionales": [
+      "Tomar con estómago vacío, sin otros medicamentos ni vitaminas por al menos 4 horas.",
+      "Se requiere análisis de TSH cada 6-12 meses para ajuste de dosis."
+    ]
+  }
+]
