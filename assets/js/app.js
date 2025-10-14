@@ -130,16 +130,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const initApp = async () => {
         console.log('🚀 Inicializando Click-Salud...');
+    
+        // 1️⃣ Cargar header
         await loadComponent('header.html', mainHeader);
-        initThemeToggle();
+    
+        // 2️⃣ Inicializar comportamiento del header
+        try {
+            const basePath = location.hostname.includes('github.io')
+                ? '/ClickSalud/'
+                : './';
+            const headerModule = await import(`${basePath}assets/js/header.js`);
+            if (typeof headerModule.initHeader === 'function') {
+                headerModule.initHeader();
+            } else {
+                console.warn('⚠️ initHeader() no encontrada en header.js');
+            }
+        } catch (err) {
+            console.error('❌ Error al inicializar header.js:', err);
+        }
+    
+        // 3️⃣ Cargar footer y nav en paralelo
         await Promise.all([
             loadComponent('footer.html', mainFooter),
             loadComponent('nav-mobile.html', mainNav)
         ]);
+    
+        // 4️⃣ Activar router y SW
         window.addEventListener('hashchange', router);
         router();
         registerServiceWorker();
     };
+
 
     const initThemeToggle = () => {
         const toggle = document.getElementById('theme-toggle');

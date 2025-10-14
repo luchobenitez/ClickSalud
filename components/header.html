@@ -10,6 +10,7 @@
 
     <!-- Controles del Usuario -->
     <div class="flex items-center space-x-4">
+
       <!-- Botón de cambio de tema -->
       <button id="theme-toggle"
         class="relative text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 p-2 rounded-full transition-colors"
@@ -18,8 +19,9 @@
       </button>
 
       <!-- Botón de notificaciones -->
-      <button class="relative text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
-        <span class="material-symbols-outlined">notifications</span>
+      <button id="notifications-btn"
+        class="relative text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 p-2 rounded-full transition">
+        <span class="material-symbols-outlined text-2xl">notifications</span>
         <span
           class="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white dark:ring-gray-800"></span>
       </button>
@@ -29,12 +31,12 @@
         <button id="user-menu-toggle"
           class="flex items-center focus:outline-none border-2 border-transparent rounded-full hover:border-blue-500 transition">
           <img src="https://randomuser.me/api/portraits/women/75.jpg" alt="Avatar de Usuario"
-            class="h-10 w-10 rounded-full">
+            class="h-10 w-10 rounded-full cursor-pointer">
         </button>
 
-        <!-- Menú desplegable de usuario -->
+        <!-- Menú desplegable -->
         <div id="user-menu"
-          class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg z-50">
+          class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg z-[9999]">
           <a href="#perfil"
             class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Perfil</a>
           <a href="#configuracion"
@@ -47,18 +49,3 @@
     </div>
   </div>
 </header>
-
-<script>
-  // --- Control del menú de usuario ---
-  document.addEventListener('click', (e) => {
-    const toggle = document.getElementById('user-menu-toggle');
-    const menu = document.getElementById('user-menu');
-    if (!toggle || !menu) return;
-
-    if (toggle.contains(e.target)) {
-      menu.classList.toggle('hidden');
-    } else if (!menu.contains(e.target)) {
-      menu.classList.add('hidden');
-    }
-  });
-</script>
