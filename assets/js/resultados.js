@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', async () => {
+export async function initResultados() {
   const tablaBody = document.getElementById('tabla-resultados-body');
   const modal = document.createElement('div');
   modal.className = 'fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50';
@@ -24,15 +24,23 @@ document.addEventListener('DOMContentLoaded', async () => {
   modal.querySelector('#cerrarModal').addEventListener('click', cerrarModal);
 
   try {
-    // Detectar ruta base
-    const basePath = location.hostname.includes('github.io') ? '/ClickSalud/' : './';
-    const response = await fetch(`${basePath}assets/data/resultados.json`);
-    const data = await response.json();
+    // ✅ Detección robusta del path, compatible con GitHub Pages
+    const basePath = location.hostname.includes('github.io')
+      ? '/ClickSalud/'
+      : `${window.location.origin}/`;
 
-    // Ordenar por fecha (descendente)
+    console.log('🧩 Buscando JSON en:', `${basePath}assets/data/resultados.json`);
+
+    const response = await fetch(`${basePath}assets/data/resultados.json`, { cache: 'no-store' });
+    if (!response.ok) throw new Error('Error cargando resultados.json');
+
+    const data = await response.json();
+    console.log('📊 Datos cargados:', data);
+
+    // Ordenar cronológicamente (descendente)
     data.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
 
-    // Renderizar filas
+    tablaBody.innerHTML = ''; // limpiar tabla
     data.forEach(item => {
       const fecha = new Date(item.fecha).toLocaleDateString('es-ES');
       const disponible = item.estado === 'disponible';
@@ -65,7 +73,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       });
     });
 
-    // Mostrar detalle
+    // Función para mostrar detalles
     const mostrarDetalle = (r) => {
       document.getElementById('modalTitulo').textContent = r.tipo;
       document.getElementById('modalFecha').textContent = `Fecha: ${new Date(r.fecha).toLocaleDateString('es-ES')}`;
@@ -73,7 +81,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       contenido.innerHTML = '';
 
       if (r.resultados?.valores) {
-        contenido.innerHTML += `
+        contenido.innerHTML = `
           <table class="w-full border-collapse text-sm">
             <thead><tr class="border-b"><th class="text-left py-1">Parámetro</th><th>Valor</th><th>Referencia</th></tr></thead>
             <tbody>
@@ -84,18 +92,16 @@ document.addEventListener('DOMContentLoaded', async () => {
                   <td class="text-center">${v.referencia}</td>
                 </tr>`).join('')}
             </tbody>
-          </table>
-        `;
+          </table>`;
       } else if (r.resultados?.informe_radiologico) {
         const inf = r.resultados.informe_radiologico;
-        contenido.innerHTML += `
+        contenido.innerHTML = `
           <p><strong>Técnica:</strong> ${r.resultados.tecnica}</p>
           <ul class="mt-2 list-disc ml-6">
             <li><strong>Campos pulmonares:</strong> ${inf.campos_pulmonares}</li>
             <li><strong>Silueta cardíaca:</strong> ${inf.silueta_cardiaca}</li>
             <li><strong>Impresión diagnóstica:</strong> ${inf.impresion_diagnostica}</li>
-          </ul>
-        `;
+          </ul>`;
       } else {
         contenido.textContent = 'No hay información detallada disponible.';
       }
@@ -112,7 +118,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 
   } catch (err) {
-    console.error('Error cargando resultados:', err);
+    console.error('❌ Error cargando resultados:', err);
     tablaBody.innerHTML = `<tr><td colspan="4" class="text-center p-4 text-red-500">Error al cargar los resultados.</td></tr>`;
   }
-});
+}
