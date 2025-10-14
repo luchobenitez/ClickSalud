@@ -32,6 +32,7 @@ export async function initSoporte() {
 
     // --- Llenar categorías únicas ---
     const categorias = [...new Set(faqsData.map((faq) => faq.categoria))];
+    console.log("🗂 Categorías detectadas:", categorias);
     categorias.forEach((categoria) => {
       const option = document.createElement("option");
       option.value = categoria;
