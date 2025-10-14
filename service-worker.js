@@ -20,6 +20,7 @@ const urlsToCache = [
   './assets/js/perfil.js',
   './assets/js/recordatorios.js',
   './assets/js/resultados.js',
+  './assets/js/soporte.js',
   './assets/js/theme.js',
   './assets/img/clicksaludLogo.png',
   'https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap',

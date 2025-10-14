@@ -137,6 +137,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     .catch(err => console.error('Error al inicializar Configuración:', err));
             break;
 
+            case 'soporte':
+                import(`${basePath}assets/js/soporte.js`)
+                    .then(module => module.initSoporte())
+                    .catch(err => console.error('Error al inicializar Soporte:', err));
+            break;
+
+
 
         }
     };
