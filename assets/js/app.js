@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
      * Router basado en el hash (#ruta)
     */
     const router = async () => {
-        const hash = window.location.hash.substring(1) || 'dashboard';
+        let hash = window.location.hash.substring(1) || 'dashboard';
         if (hash === 'historia') hash = 'historia-clinica';
         await loadPage(hash);
         
